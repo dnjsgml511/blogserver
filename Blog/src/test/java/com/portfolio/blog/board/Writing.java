@@ -50,6 +50,7 @@ public class Writing {
 		params.add("title", "title");
 		params.add("content", "content");
 		params.add("writer", "writer");
+		params.add("writedate", ds.now());
 		
 		mockMvc.perform(post("/board/insert")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
