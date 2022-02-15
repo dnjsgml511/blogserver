@@ -1,14 +1,14 @@
 package com.portfolio.blog.board.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import com.portfolio.blog.board.dto.PaginationDTO;
 import com.portfolio.blog.board.entity.BoardEntity;
 
 public interface BoardService {
 
 	// 게시물 내용 가져오기
-	public List<BoardEntity> findByBoard(PaginationDTO paginationDTO) throws Exception;
+	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception;
 	
 	// 게시물 작성
 	public void saveBoard(BoardEntity boardEntity) throws Exception;

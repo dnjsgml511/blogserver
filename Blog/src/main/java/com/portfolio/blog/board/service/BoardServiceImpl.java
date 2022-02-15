@@ -1,14 +1,12 @@
 package com.portfolio.blog.board.service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.blog.board.dto.PaginationDTO;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
 
@@ -22,16 +20,19 @@ public class BoardServiceImpl implements BoardService {
 		this.boardRepository = boardRepository;
 	}
 
+	/**
+	 * @apiNote 게시판 데이터 가져오기
+	 * @param Pageable
+	 */
 	@Override
-	public List<BoardEntity> findByBoard(PaginationDTO paginationDTO) throws Exception {
-		// TODO Auto-generated method stub
-
-		List<BoardEntity> test = new ArrayList<BoardEntity>();
-		test.add(new BoardEntity());
-
-		return test;
+	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception {
+		return boardRepository.findByTitleLike("%" + search + "%", pageable);
 	}
 
+	/**
+	 * @apiNote 데이터 저장
+	 * @param BoardEntity
+	 */
 	@Override
 	@Transactional
 	public void saveBoard(BoardEntity boardEntity) throws Exception {

@@ -7,10 +7,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Table(name = "board")
 @Entity
 @Data
+@NoArgsConstructor
 public class BoardEntity {
 
 	@Id
@@ -22,5 +24,11 @@ public class BoardEntity {
 	private String content;
 	private String writer;
 	private String writedate;
+
+	public BoardEntity(String title, String content, String writer) {
+		this.title = title;
+		this.content = content;
+		this.writer = writer;
+	}
 
 }
