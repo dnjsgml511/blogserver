@@ -39,10 +39,13 @@ public class BoardServiceImpl implements BoardService {
 		boardRepository.save(boardEntity);
 	}
 
+	/**
+	 * @apiNote 데이터 수정
+	 * @param BoardEntity
+	 */
 	@Override
 	public void updateBoard(BoardEntity boardEntity) throws Exception {
-		// TODO Auto-generated method stub
-
+		boardRepository.save(boardEntity);
 	}
 
 	/**
