@@ -18,6 +18,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.board.controller.BoardController;
+import com.portfolio.blog.board.repository.BoardRepository;
 import com.portfolio.blog.util.DateSetting;
 
 @SpringBootTest
@@ -31,12 +32,16 @@ public class Writing {
 	@Autowired
 	BoardController boardController;
 	
+	@Autowired
+	BoardRepository boardRepository;
+	
 	@Before
 	public void before() throws Exception {
 	}
 
 	@After
 	public void after() throws Exception {
+		System.out.println(boardRepository.findAll());
 	}
 
 	
@@ -44,13 +49,10 @@ public class Writing {
 	@Test
 	public void boardInsertController() throws Exception {
 		
-		DateSetting ds = new DateSetting();
-		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("title", "title");
 		params.add("content", "content");
 		params.add("writer", "writer");
-		params.add("writedate", ds.now());
 		
 		mockMvc.perform(post("/board/insert")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)

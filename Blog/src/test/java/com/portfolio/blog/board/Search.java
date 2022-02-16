@@ -36,7 +36,7 @@ public class Search {
 	BoardController boardController;
 	
 	@Autowired
-	BoardRepository BoardRepository;
+	BoardRepository boardRepository;
 	
 	@Before
 	public void before() throws Exception {
@@ -50,7 +50,7 @@ public class Search {
 			BoardEntity set = new BoardEntity("nexttitle" + i, "content" + i, "writer" + i);
 			list.add(set);
 		}
-		BoardRepository.saveAll(list);
+		boardRepository.saveAll(list);
 		
 	}
 

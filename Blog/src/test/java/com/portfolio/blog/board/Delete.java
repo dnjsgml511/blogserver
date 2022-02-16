@@ -1,7 +1,6 @@
 package com.portfolio.blog.board;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -24,7 +23,6 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
-import com.portfolio.blog.util.DateSetting;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -32,42 +30,36 @@ import com.portfolio.blog.util.DateSetting;
 public class Delete {
 
 	@Autowired
-    MockMvc mockMvc;
-	
+	MockMvc mockMvc;
+
 	@Autowired
 	BoardController boardController;
-	
+
 	@Autowired
-	BoardRepository BoardRepository;
-	
+	BoardRepository boardRepository;
+
 	@Before
 	public void before() throws Exception {
-		
 		List<BoardEntity> list = new ArrayList<>();
-		for(int i = 0; i < 100; ++i) {
-			BoardEntity set = new BoardEntity("title" + i, "content" + i, "writer" + i);
-			list.add(set);
-		}
-		for(int i = 0; i < 100; ++i) {
-			BoardEntity set = new BoardEntity("nexttitle" + i, "content" + i, "writer" + i);
-			list.add(set);
-		}
-		BoardRepository.saveAll(list);
 		
+		for(int i = 0; i < 3; ++i) {
+			BoardEntity set = new BoardEntity("title", "content", "writer");
+			list.add(set);
+		}
+		boardRepository.saveAll(list);
 	}
 
 	@After
 	public void after() throws Exception {
+		System.out.println(boardRepository.findAll());
 	}
 
-	
-	
 	@Test
 	public void boardDeleteController() throws Exception {
-		
+
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("idx", "1");
-		
+
 		mockMvc.perform(delete("/board/delete")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
