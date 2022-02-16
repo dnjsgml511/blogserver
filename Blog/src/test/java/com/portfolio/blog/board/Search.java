@@ -1,6 +1,6 @@
 package com.portfolio.blog.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -23,7 +23,6 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
-import com.portfolio.blog.util.DateSetting;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -69,7 +68,7 @@ public class Search {
 		params.add("size", "15");
 		params.add("search", "next");
 		
-		mockMvc.perform(post("/board/search")
+		mockMvc.perform(get("/board/search")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.params(params))
