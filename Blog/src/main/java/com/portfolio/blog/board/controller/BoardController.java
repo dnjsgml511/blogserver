@@ -49,4 +49,10 @@ public class BoardController {
 		boardService.updateBoard(boardEntity);
 		return HttpStatus.OK;
 	}
+	
+	@PatchMapping("hide")
+	public HttpStatus hideBoard(BoardEntity boardEntity) throws Exception{
+		boardService.hideBoard(boardEntity);
+		return HttpStatus.OK;
+	}
 }

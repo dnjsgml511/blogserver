@@ -1,5 +1,7 @@
 package com.portfolio.blog.board.service;
 
+import java.util.Optional;
+
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Configuration;
@@ -57,10 +59,16 @@ public class BoardServiceImpl implements BoardService {
 		boardRepository.delete(boardEntity);
 	}
 
+	/**
+	 * @apiNote 데이터 숨기기
+	 * @param BoardEntity
+	 */
 	@Override
 	public void hideBoard(BoardEntity boardEntity) throws Exception {
-		// TODO Auto-generated method stub
-
+		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
+		target.setHide(boardEntity.getHide());
+		
+		boardRepository.save(target);
 	}
 
 	@Override

@@ -35,6 +35,8 @@ public class BoardEntity {
 	
 	@UpdateTimestamp
 	private LocalDateTime updatedate;
+	
+	private int hide;
 
 	public BoardEntity(String title, String content, String writer) {
 		this.title = title;

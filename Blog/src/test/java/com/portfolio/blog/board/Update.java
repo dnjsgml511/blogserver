@@ -55,7 +55,7 @@ public class Update {
 
 	@After
 	public void after() throws Exception {
-		System.out.println(boardRepository.findAll());
+		System.out.println(boardRepository.findById(1));
 	}
 
 	
@@ -77,4 +77,19 @@ public class Update {
 				.andExpect(status().isOk());
 	}
 
+	@Test
+	public void boardHideController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("idx", "1");
+		params.add("hide", "1");
+		
+		mockMvc.perform(patch("/board/hide")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.params(params))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
 }
