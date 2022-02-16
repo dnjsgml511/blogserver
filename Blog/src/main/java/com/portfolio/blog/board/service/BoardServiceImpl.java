@@ -45,10 +45,13 @@ public class BoardServiceImpl implements BoardService {
 
 	}
 
+	/**
+	 * @apiNote 데이터 삭제
+	 * @param BoardEntity
+	 */
 	@Override
 	public void deleteBoard(BoardEntity boardEntity) throws Exception {
-		// TODO Auto-generated method stub
-
+		boardRepository.delete(boardEntity);
 	}
 
 	@Override
