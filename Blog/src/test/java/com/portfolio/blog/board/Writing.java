@@ -19,7 +19,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.repository.BoardRepository;
-import com.portfolio.blog.util.DateSetting;
+import com.portfolio.blog.config.security.JwtTokenUtil;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -35,16 +35,19 @@ public class Writing {
 	@Autowired
 	BoardRepository boardRepository;
 	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	String token;
+	
 	@Before
 	public void before() throws Exception {
+		token = jwtTokenUtil.generateToken("ADMIN");
 	}
 
 	@After
 	public void after() throws Exception {
 		System.out.println(boardRepository.findAll());
 	}
-
-	
 	
 	@Test
 	public void boardInsertController() throws Exception {
@@ -57,6 +60,7 @@ public class Writing {
 		mockMvc.perform(post("/board/insert")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 		 		.andExpect(status().isOk());

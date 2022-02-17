@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
+import com.portfolio.blog.config.security.JwtTokenUtil;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,8 +39,14 @@ public class Update {
 	@Autowired
 	BoardRepository boardRepository;
 	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	String token;
+	
 	@Before
 	public void before() throws Exception {
+		
+		token = jwtTokenUtil.generateToken("ADMIN");
 		
 		List<BoardEntity> list = new ArrayList<>();
 		for(int i = 0; i < 3; ++i) {
@@ -69,6 +76,7 @@ public class Update {
 		mockMvc.perform(patch("/board/update")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -84,6 +92,7 @@ public class Update {
 		mockMvc.perform(patch("/board/hide")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 				.andExpect(status().isOk());
@@ -99,6 +108,7 @@ public class Update {
 		mockMvc.perform(patch("/board/toppick")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 				.andExpect(status().isOk());

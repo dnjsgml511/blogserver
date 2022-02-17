@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
+import com.portfolio.blog.config.security.JwtTokenUtil;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,8 +39,14 @@ public class Search {
 	@Autowired
 	BoardRepository boardRepository;
 	
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	String token;
+	
 	@Before
 	public void before() throws Exception {
+		
+		token = jwtTokenUtil.generateToken("ADMIN");
 		
 		List<BoardEntity> list = new ArrayList<>();
 		
@@ -57,7 +64,6 @@ public class Search {
 			list.add(set);
 		}
 		boardRepository.saveAll(list);
-		
 	}
 
 	@After
@@ -77,6 +83,7 @@ public class Search {
 		mockMvc.perform(get("/board/search")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 		 		.andExpect(status().isOk());
@@ -91,6 +98,7 @@ public class Search {
 		mockMvc.perform(get("/board/topsearch")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 		.andDo(print())
 		.andExpect(status().isOk());
