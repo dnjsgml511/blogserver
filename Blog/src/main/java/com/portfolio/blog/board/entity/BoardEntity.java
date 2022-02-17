@@ -1,6 +1,5 @@
 package com.portfolio.blog.board.entity;
 
-import java.security.Timestamp;
 import java.time.LocalDateTime;
 
 import javax.persistence.Entity;

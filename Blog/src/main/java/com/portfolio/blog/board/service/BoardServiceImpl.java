@@ -1,7 +1,5 @@
 package com.portfolio.blog.board.service;
 
-import java.util.Optional;
-
 import javax.transaction.Transactional;
 
 import org.springframework.context.annotation.Configuration;
@@ -71,10 +69,24 @@ public class BoardServiceImpl implements BoardService {
 		boardRepository.save(target);
 	}
 
+	/**
+	 * @apiNote 데이터 상단 고정
+	 * @param BoardEntity
+	 */
 	@Override
-	public void picktopBoard(BoardEntity boardEntity) throws Exception {
-		// TODO Auto-generated method stub
-
+	public void topPickBoard(BoardEntity boardEntity) throws Exception {
+		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
+		target.setTop(boardEntity.getTop());
+		
+		boardRepository.save(target);
 	}
 
+	/**
+	 * @apiNote 상단 데이터
+	 * @param BoardEntity
+	 */
+	@Override
+	public Page<BoardEntity> findByTopBoard(Pageable pageable) throws Exception {
+		return boardRepository.findByTop(1, pageable);
+	}
 }

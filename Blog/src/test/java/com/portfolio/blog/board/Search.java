@@ -42,6 +42,12 @@ public class Search {
 	public void before() throws Exception {
 		
 		List<BoardEntity> list = new ArrayList<>();
+		
+		for(int i = 0; i < 100; ++i) {
+			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, "top writer" + i);
+			set.setTop(1);
+			list.add(set);
+		}
 		for(int i = 0; i < 100; ++i) {
 			BoardEntity set = new BoardEntity("title" + i, "content" + i, "writer" + i);
 			list.add(set);
@@ -74,6 +80,20 @@ public class Search {
 				.params(params))
 				.andDo(print())
 		 		.andExpect(status().isOk());
+	}
+	
+	@Test
+	public void boardTopSearchController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("size", "3");
+		
+		mockMvc.perform(get("/board/topsearch")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.params(params))
+		.andDo(print())
+		.andExpect(status().isOk());
 	}
 
 }

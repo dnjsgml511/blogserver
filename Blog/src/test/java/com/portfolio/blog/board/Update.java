@@ -1,8 +1,6 @@
 package com.portfolio.blog.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -25,7 +23,6 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
-import com.portfolio.blog.util.DateSetting;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -91,5 +88,21 @@ public class Update {
 				.andDo(print())
 				.andExpect(status().isOk());
 	}
+	
+	@Test
+	public void boardToppickController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("idx", "1");
+		params.add("top", "1");
+		
+		mockMvc.perform(patch("/board/toppick")
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.params(params))
+				.andDo(print())
+				.andExpect(status().isOk());
+	}
+	
 	
 }

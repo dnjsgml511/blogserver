@@ -10,6 +10,9 @@ public interface BoardService {
 	// 게시물 내용 가져오기
 	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception;
 	
+	// 상단 고정 게시물 내용 가져오기
+	public Page<BoardEntity> findByTopBoard(Pageable pageable) throws Exception;
+	
 	// 게시물 작성
 	public void saveBoard(BoardEntity boardEntity) throws Exception;
 	
@@ -23,6 +26,6 @@ public interface BoardService {
 	public void hideBoard(BoardEntity boardEntity) throws Exception;
 	
 	// 게시물 상단 고정
-	public void picktopBoard(BoardEntity boardEntity) throws Exception;
+	public void topPickBoard(BoardEntity boardEntity) throws Exception;
 	
 }
