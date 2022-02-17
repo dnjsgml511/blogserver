@@ -26,7 +26,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception {
-		return boardRepository.findByTitleLike("%" + search + "%", pageable);
+		return boardRepository.findByTitleLikeAndTop("%" + search + "%", 0, pageable);
 	}
 
 	/**
@@ -65,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
 	public void hideBoard(BoardEntity boardEntity) throws Exception {
 		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
 		target.setHide(boardEntity.getHide());
-		
+
 		boardRepository.save(target);
 	}
 
@@ -77,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
 	public void topPickBoard(BoardEntity boardEntity) throws Exception {
 		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
 		target.setTop(boardEntity.getTop());
-		
+
 		boardRepository.save(target);
 	}
 
