@@ -30,6 +30,11 @@ dependencies {
 	
 	testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.0' 
    	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.0'
+   	
+   	// security
+   	implementation 'org.springframework.boot:spring-boot-starter-security'
+   	implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+   	implementation group: 'org.springframework.security', name: 'spring-security-jwt', version: '1.0.10.RELEASE'
 }
 
 tasks.named('test') {
