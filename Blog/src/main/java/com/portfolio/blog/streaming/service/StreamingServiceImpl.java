@@ -11,9 +11,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
 
 import com.portfolio.blog.util.Paths;
 
+@Service
 public class StreamingServiceImpl extends Paths implements StreamingService{
 
 	@Override
