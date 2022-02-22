@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,7 +18,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.blog.auth.controller.AuthController;
+import com.portfolio.blog.auth.dto.JwtRequest;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -41,14 +44,14 @@ public class Auth {
 	@Test
 	public void authController() throws Exception {
 		
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("id", "ADMIN");
-		params.add("password", "1234");
-
+		ObjectMapper mapper = new ObjectMapper();
+		String body = mapper.writeValueAsString(new JwtRequest("admin", "1234"));
+		
 		mockMvc.perform(post("/authenticate")
+				.content(body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.params(params))
+				.servletPath("/authenticate"))
 				.andDo(print())
 		 		.andExpect(status().isOk());
 	}
