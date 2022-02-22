@@ -36,6 +36,10 @@ public class BoardEntity {
 	private LocalDateTime updatedate;
 	
 	private int hide;
+	
+	public BoardEntity(int idx) {
+		this.idx = idx;
+	}
 
 	public BoardEntity(String title, String content, String writer) {
 		this.title = title;

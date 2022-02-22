@@ -44,9 +44,6 @@ public class BoardController {
 	@GetMapping("search")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
 			@RequestParam("search") String search, HttpServletRequest request) throws Exception {
-		
-		System.out.println(request.getHeader("authorization"));
-		
 		return new ResponseEntity<>(boardService.findByBoard(pageable, search), HttpStatus.OK);
 	}
 

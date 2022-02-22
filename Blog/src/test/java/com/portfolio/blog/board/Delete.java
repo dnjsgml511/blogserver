@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
+import com.portfolio.blog.config.security.JwtTokenUtil;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -38,10 +39,16 @@ public class Delete {
 	@Autowired
 	BoardRepository boardRepository;
 
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
+	String token;
+	
 	@Before
 	public void before() throws Exception {
-		List<BoardEntity> list = new ArrayList<>();
 		
+		token = jwtTokenUtil.generateToken("ADMIN");
+		
+		List<BoardEntity> list = new ArrayList<>();
 		for(int i = 0; i < 3; ++i) {
 			BoardEntity set = new BoardEntity("title", "content", "writer");
 			list.add(set);
@@ -63,6 +70,7 @@ public class Delete {
 		mockMvc.perform(delete("/board/delete")
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
 				.andExpect(status().isOk());
