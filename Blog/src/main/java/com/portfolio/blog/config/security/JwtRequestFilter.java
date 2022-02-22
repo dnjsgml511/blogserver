@@ -10,8 +10,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,9 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 
 	private static final List<String> EXCLUDE_URL = Collections
-			.unmodifiableList(Arrays.asList("/authenticate", "/refresh"));
-
-	Logger logger = LoggerFactory.getLogger("JwtRequestFilter.class");
+			.unmodifiableList(Arrays.asList("/authenticate", "/signup"));
 
 	// 서버 들어올때 토큰 확인 필터
 	@Override
@@ -40,7 +36,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String token = jwtTokenUtil.popJWTtoken(request);
-
+		
 		try {
 			String username = jwtTokenUtil.popJWTData(token, "jti");
 

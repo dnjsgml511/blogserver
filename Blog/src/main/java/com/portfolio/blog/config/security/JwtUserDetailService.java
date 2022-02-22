@@ -19,9 +19,10 @@ public class JwtUserDetailService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
 		Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
 		grantedAuthorities.add(new SimpleGrantedAuthority(Role.USER.getValue()));
-		if (id.equals("admin")) {
+		if (id.equalsIgnoreCase("admin")) {
 			grantedAuthorities.add(new SimpleGrantedAuthority(Role.ADMIN.getValue()));
 		}
+		
 		return new User(id, "", grantedAuthorities);
 	}
 }
