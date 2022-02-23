@@ -1,7 +1,5 @@
 package com.portfolio.blog.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,11 +21,12 @@ import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.util.MockPerform;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Update {
+public class Update extends MockPerform{
 
 	@Autowired
     MockMvc mockMvc;
@@ -41,6 +39,7 @@ public class Update {
 	
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
+	
 	String token;
 	
 	@Before
@@ -60,6 +59,7 @@ public class Update {
 	@After
 	public void after() throws Exception {
 		System.out.println(boardRepository.findById(1));
+		boardRepository.deleteAll();
 	}
 
 	
@@ -73,13 +73,7 @@ public class Update {
 		params.add("content", "update content");
 		params.add("writer", "update writer");
 		
-		mockMvc.perform(patch("/board/update")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-				.andDo(print())
-				.andExpect(status().isOk());
+		patchMockMVC("/board/update", params, status().isOk(), token);
 	}
 
 	@Test
@@ -89,30 +83,23 @@ public class Update {
 		params.add("idx", "1");
 		params.add("hide", "1");
 		
-		mockMvc.perform(patch("/board/hide")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-				.andDo(print())
-				.andExpect(status().isOk());
+		patchMockMVC("/board/hide", params, status().isOk(), token);
 	}
 	
 	@Test
 	public void boardToppickController() throws Exception {
 		
+		Iterable<BoardEntity> alldata = boardRepository.findAll();
+		int firstidx = 0;
+		for (BoardEntity data : alldata) {
+			firstidx = data.getIdx();
+			break;
+		}
+		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
-		params.add("idx", "1");
+		params.add("idx", Integer.toString(firstidx));
 		params.add("top", "1");
 		
-		mockMvc.perform(patch("/board/toppick")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-				.andDo(print())
-				.andExpect(status().isOk());
+		patchMockMVC("/board/toppick", params, status().isOk(), token);
 	}
-	
-	
 }

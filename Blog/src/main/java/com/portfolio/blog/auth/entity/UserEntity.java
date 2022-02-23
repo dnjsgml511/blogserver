@@ -10,8 +10,6 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
 
-import com.sun.istack.NotNull;
-
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -26,13 +24,9 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int num;
 	
-	@NotNull
 	private String id;
-	@NotNull
 	private String nickname;
-	@NotNull
 	private String password;
-	@NotNull
 	private String grade;
 	
 	@CreationTimestamp
@@ -40,6 +34,13 @@ public class UserEntity {
 	
 	public UserEntity() {
 		
+	}
+	
+	public UserEntity(String id, String nickname, String password){
+		this.id = id;
+		this.nickname = nickname;
+		this.password = password;
+		this.grade = "사용자";
 	}
 	
 	public UserEntity(String id, String nickname, String password, String grade){

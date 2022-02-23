@@ -1,6 +1,8 @@
 package com.portfolio.blog.util;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,6 +33,7 @@ public class MockPerform {
 				.content(body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
 				.servletPath(url))
 				.andDo(print())
 		 		.andExpect(matcher);
@@ -53,6 +56,44 @@ public class MockPerform {
 				.params(params))
 				.andDo(print())
 		 		.andExpect(status().isOk());
+	}
+	
+	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {
+		mockMvc.perform(patch(url)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.params(params))
+		.andDo(print())
+		.andExpect(status().isOk());
+	}
+	
+	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
+		mockMvc.perform(patch(url)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
+				.params(params))
+		.andDo(print())
+		.andExpect(status().isOk());
+	}
+	
+	public void deleteMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {
+		mockMvc.perform(delete(url)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.params(params))
+		.andDo(print())
+		.andExpect(status().isOk());
+	}
+	
+	public void deleteMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
+		mockMvc.perform(delete(url)
+				.contentType(MediaType.APPLICATION_JSON_VALUE)
+				.accept(MediaType.APPLICATION_JSON_VALUE)
+				.header("authorization", "Bearer " + token)
+				.params(params))
+		.andDo(print())
+		.andExpect(status().isOk());
 	}
 	
 }

@@ -1,7 +1,5 @@
 package com.portfolio.blog.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,11 +21,12 @@ import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.util.MockPerform;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Delete {
+public class Delete extends MockPerform{
 
 	@Autowired
 	MockMvc mockMvc;
@@ -41,12 +39,15 @@ public class Delete {
 
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
+	
 	String token;
+	String url;
 	
 	@Before
 	public void before() throws Exception {
 		
 		token = jwtTokenUtil.generateToken("ADMIN");
+		url = "/board/delete";
 		
 		List<BoardEntity> list = new ArrayList<>();
 		for(int i = 0; i < 3; ++i) {
@@ -59,6 +60,8 @@ public class Delete {
 	@After
 	public void after() throws Exception {
 		System.out.println(boardRepository.findAll());
+		
+		boardRepository.deleteAll();
 	}
 
 	@Test
@@ -67,13 +70,6 @@ public class Delete {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("idx", "1");
 
-		mockMvc.perform(delete("/board/delete")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-				.andDo(print())
-				.andExpect(status().isOk());
+		deleteMockMVC(url, params, status().isOk(), token);
 	}
-
 }

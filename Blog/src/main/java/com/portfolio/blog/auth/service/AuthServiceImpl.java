@@ -24,7 +24,11 @@ public class AuthServiceImpl implements AuthService{
 
 		UserEntity check = userRepository.findById(authenticationRequest.getId());
 		if(check == null) {
-			return new ResponseEntity<>("로그인에 실패하였습니다", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>("아이디를 다시 입력해주세요", HttpStatus.FORBIDDEN);
+		}
+		
+		if(!check.getPassword().equals(authenticationRequest.getPassword())) {
+			return new ResponseEntity<>("비밀번호가 틀렸습니다", HttpStatus.FORBIDDEN);
 		}
 		
 		final String token = jwtTokenUtil.generateToken(authenticationRequest.getId());
@@ -33,6 +37,18 @@ public class AuthServiceImpl implements AuthService{
 
 	@Override
 	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
+		
+		if(userEntity.getId() == null || userEntity.getId().equals("")) {
+			return new ResponseEntity<>("아이디를 입력해주세요", HttpStatus.FORBIDDEN);
+		}
+		
+		if(userEntity.getPassword() == null || userEntity.getPassword().equals("")) {
+			return new ResponseEntity<>("비밀번호를 입력해주세요", HttpStatus.FORBIDDEN);
+		}
+		
+		if(userEntity.getNickname() == null || userEntity.getNickname().equals("")) {
+			return new ResponseEntity<>("닉네임을 입력해주세요", HttpStatus.FORBIDDEN);
+		}
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check != null) {

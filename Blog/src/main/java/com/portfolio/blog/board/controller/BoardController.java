@@ -31,9 +31,9 @@ public class BoardController {
 	BoardService boardService;
 
 	@PostMapping("insert")
-	public HttpStatus insertBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> insertBoard(BoardEntity boardEntity) throws Exception {
 		boardService.saveBoard(boardEntity);
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@GetMapping("topsearch")
@@ -48,26 +48,26 @@ public class BoardController {
 	}
 
 	@DeleteMapping("delete")
-	public HttpStatus deleteBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> deleteBoard(BoardEntity boardEntity) throws Exception {
 		boardService.deleteBoard(boardEntity);
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PatchMapping("update")
-	public HttpStatus updateBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> updateBoard(BoardEntity boardEntity) throws Exception {
 		boardService.updateBoard(boardEntity);
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PatchMapping("hide")
-	public HttpStatus hideBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> hideBoard(BoardEntity boardEntity) throws Exception {
 		boardService.hideBoard(boardEntity);
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PatchMapping("toppick")
-	public HttpStatus toppickBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> toppickBoard(BoardEntity boardEntity) throws Exception {
 		boardService.topPickBoard(boardEntity);
-		return HttpStatus.OK;
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 }

@@ -1,7 +1,5 @@
 package com.portfolio.blog.board;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -14,7 +12,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,11 +21,12 @@ import com.portfolio.blog.board.controller.BoardController;
 import com.portfolio.blog.board.entity.BoardEntity;
 import com.portfolio.blog.board.repository.BoardRepository;
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.util.MockPerform;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Search {
+public class Search extends MockPerform{
 
 	@Autowired
     MockMvc mockMvc;
@@ -68,9 +66,8 @@ public class Search {
 
 	@After
 	public void after() throws Exception {
+		boardRepository.deleteAll();
 	}
-
-	
 	
 	@Test
 	public void boardSearchController() throws Exception {
@@ -80,13 +77,7 @@ public class Search {
 		params.add("size", "15");
 		params.add("search", "next");
 		
-		mockMvc.perform(get("/board/search")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-				.andDo(print())
-		 		.andExpect(status().isOk());
+		getMockMVC("/board/search", params, status().isOk(), token);
 	}
 	
 	@Test
@@ -95,13 +86,8 @@ public class Search {
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 		params.add("size", "3");
 		
-		mockMvc.perform(get("/board/topsearch")
-				.contentType(MediaType.APPLICATION_JSON_VALUE)
-				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.header("authorization", "Bearer " + token)
-				.params(params))
-		.andDo(print())
-		.andExpect(status().isOk());
+		getMockMVC("/board/topsearch", params, status().isOk(), token);
+		
 	}
 
 }
