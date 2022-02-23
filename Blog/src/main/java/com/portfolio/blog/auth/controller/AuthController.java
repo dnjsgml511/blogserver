@@ -3,7 +3,6 @@ package com.portfolio.blog.auth.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,7 +14,7 @@ import com.portfolio.blog.auth.service.AuthService;
 
 @RestController
 public class AuthController {
-
+	
 	@Autowired
 	private AuthService service;
 
@@ -27,13 +26,7 @@ public class AuthController {
 
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody UserEntity userEntity) throws Exception {
-		System.out.println("signupsignupsignup");
-		System.out.println("signupsignupsignup");
-		System.out.println("signupsignupsignup");
-		System.out.println("signupsignupsignup");
-		System.out.println("signupsignupsignup");
-		System.out.println("signupsignupsignup");
-		return new ResponseEntity<>(service.signup(userEntity), HttpStatus.OK);
+		return service.signup(userEntity);
 	}
 
 }

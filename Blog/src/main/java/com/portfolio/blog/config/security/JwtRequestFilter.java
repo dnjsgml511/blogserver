@@ -28,7 +28,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	private JwtTokenUtil jwtTokenUtil;
 
 	private static final List<String> EXCLUDE_URL = Collections
-			.unmodifiableList(Arrays.asList("/authenticate", "/signup"));
+			.unmodifiableList(Arrays.asList("/authenticate", "/signup", "/loginform"));
 
 	// 서버 들어올때 토큰 확인 필터
 	@Override

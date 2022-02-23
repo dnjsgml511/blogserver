@@ -70,7 +70,11 @@ public class JwtTokenUtil {
 
 	// request에서 토큰 뽑기
 	public String popJWTtoken(HttpServletRequest request) {
-		return (String) request.getHeader("Authorization").replace("Bearer ", "");
+		try {
+			return (String) request.getHeader("Authorization").replace("Bearer ", "");
+		} catch (Exception e) {
+			return "";
+		}
 	}
 
 	// 토큰에서 데이터 뽑기

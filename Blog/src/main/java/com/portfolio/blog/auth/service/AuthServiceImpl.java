@@ -21,15 +21,26 @@ public class AuthServiceImpl implements AuthService{
 	
 	@Override
 	public ResponseEntity<?> createAuthenticationToken(JwtRequest authenticationRequest) throws Exception {
+
+		UserEntity check = userRepository.findById(authenticationRequest.getId());
+		if(check == null) {
+			return new ResponseEntity<>("로그인에 실패하였습니다", HttpStatus.FORBIDDEN);
+		}
+		
 		final String token = jwtTokenUtil.generateToken(authenticationRequest.getId());
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 
 	@Override
-	public HttpStatus signup(UserEntity userEntity) throws Exception {
-		userRepository.save(userEntity);
+	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
 		
-		return HttpStatus.OK;
+		UserEntity check = userRepository.findById(userEntity.getId());
+		if(check != null) {
+			return new ResponseEntity<>("이미 가입 된 아이디입니다", HttpStatus.FORBIDDEN);
+		}
+		
+		userRepository.save(userEntity);
+		return new ResponseEntity<>("회원가입이 완료되었습니다", HttpStatus.OK);
 	}
 
 }
