@@ -59,13 +59,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-
+		
 			http
 				.cors()
 				.and()
 				
 		    	.csrf().disable()
-		    	.authorizeRequests().antMatchers("/authenticate", "/signup", "/loginform").permitAll()
+		    	.authorizeRequests().antMatchers("/authenticate", "/signup", "/loginform",
+		    			"/swagger-ui/index.html", "swagger-ui/**"
+		    			).permitAll()
 		    	.anyRequest().authenticated()
 		    	.and()
 		    	
