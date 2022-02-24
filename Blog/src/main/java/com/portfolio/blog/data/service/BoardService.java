@@ -1,9 +1,9 @@
-package com.portfolio.blog.board.service;
+package com.portfolio.blog.data.service;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import com.portfolio.blog.board.entity.BoardEntity;
+import com.portfolio.blog.data.entitiy.BoardEntity;
 
 public interface BoardService {
 

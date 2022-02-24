@@ -1,4 +1,4 @@
-package com.portfolio.blog.board.service;
+package com.portfolio.blog.data.service.impl;
 
 import javax.transaction.Transactional;
 
@@ -7,8 +7,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.blog.board.entity.BoardEntity;
-import com.portfolio.blog.board.repository.BoardRepository;
+import com.portfolio.blog.data.entitiy.BoardEntity;
+import com.portfolio.blog.data.repository.BoardRepository;
+import com.portfolio.blog.data.service.BoardService;
 
 @Configuration
 @Service

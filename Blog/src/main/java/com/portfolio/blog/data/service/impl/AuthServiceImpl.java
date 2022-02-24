@@ -1,14 +1,15 @@
-package com.portfolio.blog.auth.service;
+package com.portfolio.blog.data.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.portfolio.blog.auth.dto.JwtRequest;
-import com.portfolio.blog.auth.entity.UserEntity;
-import com.portfolio.blog.auth.repositroy.UserRepository;
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.data.dto.JwtRequest;
+import com.portfolio.blog.data.entitiy.UserEntity;
+import com.portfolio.blog.data.repository.UserRepository;
+import com.portfolio.blog.data.service.AuthService;
 
 @Service
 public class AuthServiceImpl implements AuthService{

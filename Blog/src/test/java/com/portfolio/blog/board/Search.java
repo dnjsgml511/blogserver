@@ -17,10 +17,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import com.portfolio.blog.board.controller.BoardController;
-import com.portfolio.blog.board.entity.BoardEntity;
-import com.portfolio.blog.board.repository.BoardRepository;
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.data.controller.BoardController;
+import com.portfolio.blog.data.entitiy.BoardEntity;
+import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.util.MockPerform;
 
 @SpringBootTest

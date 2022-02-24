@@ -1,4 +1,4 @@
-package com.portfolio.blog.streaming.controller;
+package com.portfolio.blog.data.controller;
 
 import java.io.IOException;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-import com.portfolio.blog.streaming.service.StreamingService;
+import com.portfolio.blog.data.service.StreamingService;
 
 @Controller
 public class StreamingController {

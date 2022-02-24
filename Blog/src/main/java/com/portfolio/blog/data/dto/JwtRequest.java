@@ -1,4 +1,4 @@
-package com.portfolio.blog.auth.dto;
+package com.portfolio.blog.data.dto;
 
 import lombok.Getter;
 import lombok.Setter;

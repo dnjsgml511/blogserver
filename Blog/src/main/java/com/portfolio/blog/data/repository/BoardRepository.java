@@ -1,11 +1,11 @@
-package com.portfolio.blog.board.repository;
+package com.portfolio.blog.data.repository;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
-import com.portfolio.blog.board.entity.BoardEntity;
+import com.portfolio.blog.data.entitiy.BoardEntity;
 
 @Repository
 public interface BoardRepository extends PagingAndSortingRepository<BoardEntity, Integer> {

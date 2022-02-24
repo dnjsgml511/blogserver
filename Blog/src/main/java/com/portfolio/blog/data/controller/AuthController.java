@@ -1,4 +1,4 @@
-package com.portfolio.blog.auth.controller;
+package com.portfolio.blog.data.controller;
 
 import javax.servlet.http.HttpSession;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.portfolio.blog.auth.dto.JwtRequest;
-import com.portfolio.blog.auth.entity.UserEntity;
-import com.portfolio.blog.auth.service.AuthService;
+import com.portfolio.blog.data.dto.JwtRequest;
+import com.portfolio.blog.data.entitiy.UserEntity;
+import com.portfolio.blog.data.service.AuthService;
 
 @RestController
 public class AuthController {

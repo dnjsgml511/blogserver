@@ -1,4 +1,4 @@
-package com.portfolio.blog.streaming.service;
+package com.portfolio.blog.data.service;
 
 import java.io.IOException;
 

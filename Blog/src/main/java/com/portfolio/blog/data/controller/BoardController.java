@@ -1,4 +1,4 @@
-package com.portfolio.blog.board.controller;
+package com.portfolio.blog.data.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.portfolio.blog.board.entity.BoardEntity;
-import com.portfolio.blog.board.service.BoardService;
+import com.portfolio.blog.data.entitiy.BoardEntity;
+import com.portfolio.blog.data.service.BoardService;
 
 @RestController
 @RequestMapping("/board")

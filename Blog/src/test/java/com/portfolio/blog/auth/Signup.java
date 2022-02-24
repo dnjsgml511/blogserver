@@ -2,8 +2,6 @@ package com.portfolio.blog.auth;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -16,8 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.portfolio.blog.auth.entity.UserEntity;
-import com.portfolio.blog.auth.repositroy.UserRepository;
+import com.portfolio.blog.data.entitiy.UserEntity;
+import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.MockPerform;
 
 @SpringBootTest

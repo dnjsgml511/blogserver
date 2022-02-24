@@ -1,4 +1,4 @@
-package com.portfolio.blog.auth.entity;
+package com.portfolio.blog.data.entitiy;
 
 import java.time.LocalDateTime;
 

@@ -1,4 +1,4 @@
-package com.portfolio.blog.streaming.service;
+package com.portfolio.blog.data.service.impl;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -13,6 +13,7 @@ import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.portfolio.blog.data.service.StreamingService;
 import com.portfolio.blog.util.Paths;
 
 @Service

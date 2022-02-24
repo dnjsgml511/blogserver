@@ -1,9 +1,9 @@
-package com.portfolio.blog.auth.service;
+package com.portfolio.blog.data.service;
 
 import org.springframework.http.ResponseEntity;
 
-import com.portfolio.blog.auth.dto.JwtRequest;
-import com.portfolio.blog.auth.entity.UserEntity;
+import com.portfolio.blog.data.dto.JwtRequest;
+import com.portfolio.blog.data.entitiy.UserEntity;
 
 public interface AuthService {
 	public ResponseEntity<?> createAuthenticationToken(JwtRequest authenticationRequest) throws Exception;
