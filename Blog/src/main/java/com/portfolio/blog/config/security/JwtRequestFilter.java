@@ -18,6 +18,8 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.portfolio.blog.util.Paths;
+
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
 
@@ -27,9 +29,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
 
-	private static final List<String> EXCLUDE_URL = Collections
-			.unmodifiableList(Arrays.asList("/authenticate", "/signup", "/loginform",
-					"/swagger-ui/index.html", "swagger-ui/**"));
+//	private static final List<String> EXCLUDE_URL = Collections
+//			.unmodifiableList(Arrays.asList("/authenticate", "/signup", "/loginform",
+//					"/swagger-ui/"));
 
 	// 서버 들어올때 토큰 확인 필터
 	@Override
@@ -61,7 +63,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
+		
+		List<String> list = Arrays.asList(Paths.JWT_FILTER_PATH);
+		
+//		return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
+		return list.stream().anyMatch(exclude -> request.getServletPath().indexOf(exclude) != -1);
 	}
 
 }

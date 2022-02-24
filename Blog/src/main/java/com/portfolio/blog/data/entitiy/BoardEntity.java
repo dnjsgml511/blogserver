@@ -11,12 +11,14 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Table(name = "board")
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class BoardEntity {
 
