@@ -5,7 +5,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -45,7 +44,7 @@ public class MockPerform {
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.params(params))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(matcher);
 	}
 	
 	public void getMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
@@ -55,7 +54,7 @@ public class MockPerform {
 				.header("authorization", "Bearer " + token)
 				.params(params))
 				.andDo(print())
-		 		.andExpect(status().isOk());
+		 		.andExpect(matcher);
 	}
 	
 	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {
@@ -64,7 +63,7 @@ public class MockPerform {
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.params(params))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(matcher);
 	}
 	
 	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
@@ -74,7 +73,7 @@ public class MockPerform {
 				.header("authorization", "Bearer " + token)
 				.params(params))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(matcher);
 	}
 	
 	public void deleteMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {
@@ -83,7 +82,7 @@ public class MockPerform {
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.params(params))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(matcher);
 	}
 	
 	public void deleteMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
@@ -93,7 +92,7 @@ public class MockPerform {
 				.header("authorization", "Bearer " + token)
 				.params(params))
 		.andDo(print())
-		.andExpect(status().isOk());
+		.andExpect(matcher);
 	}
 	
 }

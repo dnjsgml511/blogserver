@@ -2,6 +2,10 @@ package com.portfolio.blog.admin;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.MockPerform;
@@ -38,11 +43,13 @@ public class Admin extends MockPerform {
 
 	@Before
 	public void before() throws Exception {
-		
-		token = jwtTokenUtil.generateToken("ADMIN");
-		
-		user = new UserEntity("admin", "관리자", "1234");
-		userRepository.save(user);
+
+		List<UserEntity> list = new ArrayList<UserEntity>();
+		user = new UserEntity("admin", "관리자", "1234", Role.ROLE_ADMIN);
+		list.add(user);
+		user = new UserEntity("user", "사용자", "1234");
+		list.add(user);
+		userRepository.saveAll(list);
 	}
 
 	@After
@@ -52,12 +59,27 @@ public class Admin extends MockPerform {
 
 
 	@Test
-	public void userlistController() throws Exception {
+	public void userlistAdminController() throws Exception {
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		
+		token = jwtTokenUtil.generateToken("ADMIN", claims);
 		
 		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
-		params.add("id", "admin");
-		params.add("password", "12345");
 
+		getMockMVC("/admin/userlist", params, status().isOk(), token);
+	}
+	
+	@Test
+	public void userlistNotAdminController() throws Exception {
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_USER);
+		token = jwtTokenUtil.generateToken("USER", claims);
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		
 		getMockMVC("/admin/userlist", params, status().isForbidden(), token);
 	}
 }

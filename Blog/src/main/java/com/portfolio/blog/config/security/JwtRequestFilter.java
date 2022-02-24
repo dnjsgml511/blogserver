@@ -41,7 +41,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			String username = jwtTokenUtil.popJWTData(token, "jti");
 
 			if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-				UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(username);
+				UserDetails userDetails = this.jwtUserDetailService.loadUserByUsername(token);
+				
 				if (jwtTokenUtil.validateToken(token, userDetails)) {
 					UsernamePasswordAuthenticationToken authenticationToken = 
 							new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
@@ -53,7 +54,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		} catch (Exception e) {
 			System.out.println("토큰 만료..");
 		}
-
+		
 		filterChain.doFilter(request, response);
 	}
 

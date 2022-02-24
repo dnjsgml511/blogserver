@@ -1,15 +1,5 @@
 package com.portfolio.blog.config.security;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-
-@Getter
-@AllArgsConstructor
 public enum Role {
-
-    USER("ROLE_USER"),
-    ADMIN("ROLE_ADMIN");
-
-    private String value;
-
+	ROLE_USER, ROLE_ADMIN, ROLE_MANAGER
 }

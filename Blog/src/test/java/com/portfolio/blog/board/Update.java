@@ -3,6 +3,7 @@ package com.portfolio.blog.board;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.junit.After;
@@ -18,6 +19,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.controller.BoardController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
@@ -45,7 +47,9 @@ public class Update extends MockPerform{
 	@Before
 	public void before() throws Exception {
 		
-		token = jwtTokenUtil.generateToken("ADMIN");
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		token = jwtTokenUtil.generateToken("ADMIN", claims);
 		
 		List<BoardEntity> list = new ArrayList<>();
 		for(int i = 0; i < 3; ++i) {

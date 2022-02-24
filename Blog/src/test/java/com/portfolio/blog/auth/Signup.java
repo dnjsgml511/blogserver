@@ -14,6 +14,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.MockPerform;
@@ -72,7 +73,7 @@ public class Signup extends MockPerform{
 		
 		userRepository.save(user);
 		
-		user = new UserEntity(null, "관리자", "1234", "관리자");
+		user = new UserEntity(null, "관리자", "1234", Role.ROLE_ADMIN);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String body = mapper.registerModule(new JavaTimeModule()).writeValueAsString(user);
@@ -85,7 +86,7 @@ public class Signup extends MockPerform{
 		
 		userRepository.save(user);
 		
-		user = new UserEntity("admin", null, "1234", "관리자");
+		user = new UserEntity("admin", null, "1234", Role.ROLE_ADMIN);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String body = mapper.registerModule(new JavaTimeModule()).writeValueAsString(user);
@@ -98,7 +99,7 @@ public class Signup extends MockPerform{
 		
 		userRepository.save(user);
 		
-		user = new UserEntity("admin", "ad", null, "관리자");
+		user = new UserEntity("admin", "ad", null, Role.ROLE_ADMIN);
 		
 		ObjectMapper mapper = new ObjectMapper();
 		String body = mapper.registerModule(new JavaTimeModule()).writeValueAsString(user);
