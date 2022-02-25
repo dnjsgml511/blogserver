@@ -70,6 +70,7 @@ public class AuthServiceImpl implements AuthService{
 		claims.put("role", userEntity.getGrade());
 		
 		userRepository.save(userEntity);
+		
 		return new ResponseEntity<>(RetrunText.SIGN_SUCCESS.getValue(), HttpStatus.OK);
 	}
 
