@@ -52,16 +52,23 @@ public class Search extends ControllerMockPerform{
 		
 		List<BoardEntity> list = new ArrayList<>();
 		
-		for(int i = 0; i < 100; ++i) {
+		for(int i = 0; i < 5; ++i) {
 			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, "top writer" + i);
 			set.setTop(1);
 			list.add(set);
 		}
-		for(int i = 0; i < 100; ++i) {
+		
+		for(int i = 0; i < 5; ++i) {
+			BoardEntity set = new BoardEntity("title" + i, "content" + i, "writer" + i);
+			set.setHide(1);
+			list.add(set);
+		}
+		
+		for(int i = 0; i < 5; ++i) {
 			BoardEntity set = new BoardEntity("title" + i, "content" + i, "writer" + i);
 			list.add(set);
 		}
-		for(int i = 0; i < 100; ++i) {
+		for(int i = 0; i < 5; ++i) {
 			BoardEntity set = new BoardEntity("nexttitle" + i, "content" + i, "writer" + i);
 			list.add(set);
 		}
@@ -71,6 +78,34 @@ public class Search extends ControllerMockPerform{
 	@After
 	public void after() throws Exception {
 		boardRepository.deleteAll();
+	}
+	
+	@Test
+	public void boardNoPageSearchController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("size", "15");
+		
+		getMockMVC("/board/search", params, status().isOk(), token);
+	}
+	
+	@Test
+	public void boardNoSizeSearchController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("page", "0");
+		
+		getMockMVC("/board/search", params, status().isOk(), token);
+	}
+	
+	@Test
+	public void boardNoSearchController() throws Exception {
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("page", "0");
+		params.add("size", "15");
+		
+		getMockMVC("/board/search", params, status().isOk(), token);
 	}
 	
 	@Test
