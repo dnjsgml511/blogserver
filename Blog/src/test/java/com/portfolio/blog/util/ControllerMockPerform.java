@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.util.MultiValueMap;
 
-public class MockPerform {
+public class ControllerMockPerform {
 
 	@Autowired
     MockMvc mockMvc;

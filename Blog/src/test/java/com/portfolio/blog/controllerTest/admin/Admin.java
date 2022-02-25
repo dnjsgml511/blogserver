@@ -1,4 +1,4 @@
-package com.portfolio.blog.admin;
+package com.portfolio.blog.controllerTest.admin;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -22,12 +22,12 @@ import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
-import com.portfolio.blog.util.MockPerform;
+import com.portfolio.blog.util.ControllerMockPerform;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Admin extends MockPerform {
+public class Admin extends ControllerMockPerform {
 
 	@Autowired
 	MockMvc mockMvc;

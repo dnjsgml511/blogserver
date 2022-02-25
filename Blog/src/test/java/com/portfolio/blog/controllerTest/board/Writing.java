@@ -1,4 +1,4 @@
-package com.portfolio.blog.board;
+package com.portfolio.blog.controllerTest.board;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -20,12 +20,12 @@ import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.controller.BoardController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
-import com.portfolio.blog.util.MockPerform;
+import com.portfolio.blog.util.ControllerMockPerform;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Writing extends MockPerform{
+public class Writing extends ControllerMockPerform{
 
 	@Autowired
     MockMvc mockMvc;
