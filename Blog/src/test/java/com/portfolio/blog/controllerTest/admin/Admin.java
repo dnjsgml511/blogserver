@@ -49,6 +49,10 @@ public class Admin extends ControllerMockPerform {
 		list.add(user);
 		user = new UserEntity("user", "사용자", "1234");
 		list.add(user);
+		user = new UserEntity("user2", "두번째", "1234");
+		list.add(user);
+		user = new UserEntity("asdf", "사용자2", "1234");
+		list.add(user);
 		userRepository.saveAll(list);
 	}
 
@@ -57,6 +61,45 @@ public class Admin extends ControllerMockPerform {
 		userRepository.delete(user);
 	}
 
+	
+	@Test
+	public void SearchGradeController() throws Exception {
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		token = jwtTokenUtil.generateToken("ADMIN", claims);
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("grade", "ROLE_USER");
+		
+		getMockMVC("/admin/userlist", params, status().isOk(), token);
+	}
+	
+	@Test
+	public void SearchNicknameController() throws Exception {
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		token = jwtTokenUtil.generateToken("ADMIN", claims);
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("nickname", "사용자");
+		
+		getMockMVC("/admin/userlist", params, status().isOk(), token);
+	}
+	
+	@Test
+	public void SearchIdController() throws Exception {
+		
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		token = jwtTokenUtil.generateToken("ADMIN", claims);
+		
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		params.add("id", "user");
+		
+		getMockMVC("/admin/userlist", params, status().isOk(), token);
+	}
 
 	@Test
 	public void userlistAdminController() throws Exception {

@@ -5,5 +5,5 @@ import java.util.List;
 import com.portfolio.blog.data.entitiy.UserEntity;
 
 public interface AdminService {
-	public List<UserEntity> userlist() throws Exception;
+	public List<UserEntity> userlist(UserEntity userEntity) throws Exception;
 }

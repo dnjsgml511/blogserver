@@ -36,8 +36,8 @@ public class AdminController {
 	@ApiResponses(
 		@ApiResponse(responseCode = "200", description = "Get User list", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)
-	public ResponseEntity<?> userlist(HttpServletRequest request) throws Exception {
-		return new ResponseEntity<>(adminService.userlist(), HttpStatus.OK);
+	public ResponseEntity<?> userlist(HttpServletRequest request, UserEntity userEntity) throws Exception {
+		return new ResponseEntity<>(adminService.userlist(userEntity), HttpStatus.OK);
 	}
 
 }

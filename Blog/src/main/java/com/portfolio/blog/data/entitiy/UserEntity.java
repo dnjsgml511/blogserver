@@ -17,11 +17,13 @@ import com.portfolio.blog.config.security.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Schema(description = "사용자")
 
 @Getter @Setter @Entity
 @Table(name = "users")
+@ToString
 public class UserEntity {
 	
 	@Schema(description = "Own Number")
