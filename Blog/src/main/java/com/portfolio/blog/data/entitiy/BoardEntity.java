@@ -28,24 +28,24 @@ public class BoardEntity {
 	@Schema(description = "Index")
 	private int idx;
 
-	@Schema(description = "Top pick")
+	@Schema(description = "Top pick", example = "0")
 	private int top;
-	@Schema(description = "Title")
+	@Schema(description = "Title", example = "Title")
 	private String title;
-	@Schema(description = "Content")
+	@Schema(description = "Content", example = "Content")
 	private String content;
-	@Schema(description = "Writer")
+	@Schema(description = "Writer", example = "Writer")
 	private String writer;
 	
 	@CreationTimestamp
-	@Schema(description = "Write Date")
+	@Schema(description = "Write Date", example = "2022-04-06 00:00:00")
 	private LocalDateTime writedate;
 	
 	@UpdateTimestamp
-	@Schema(description = "Update Date")
+	@Schema(description = "Update Date" , example = "2022-04-06 00:00:00")
 	private LocalDateTime updatedate;
 	
-	@Schema(description = "Content Hiden")
+	@Schema(description = "Content Hiden", example = "0")
 	private int hide;
 	
 	public BoardEntity(int idx) {
