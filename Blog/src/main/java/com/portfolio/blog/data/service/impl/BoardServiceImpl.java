@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception {
-		return boardRepository.findByTitleLikeAndTop("%" + search + "%", 0, pageable);
+		return boardRepository.findByTitleLikeAndTopAndHide("%" + search + "%", 0, 0, pageable);
 	}
 
 	/**

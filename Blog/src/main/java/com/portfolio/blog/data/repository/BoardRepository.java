@@ -9,7 +9,7 @@ import com.portfolio.blog.data.entitiy.BoardEntity;
 
 @Repository
 public interface BoardRepository extends PagingAndSortingRepository<BoardEntity, Integer> {
-	public Page<BoardEntity> findByTitleLikeAndTop(String search, int top, Pageable pageable);
+	public Page<BoardEntity> findByTitleLikeAndTopAndHide(String search, int top, int hide, Pageable pageable);
 
 	public Page<BoardEntity> findByTop(int top, Pageable pageable);
 }
