@@ -14,28 +14,34 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.portfolio.blog.config.security.Role;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@Getter
-@Setter
+@Schema(description = "사용자")
+
+@Getter @Setter @Entity
 @Table(name = "users")
-@Entity
-@ToString
 public class UserEntity {
+	
+	@Schema(description = "Own Number")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int num;
 	
+	@Schema(description = "ID")
 	private String id;
+	@Schema(description = "NickName")
 	private String nickname;
+	@Schema(description = "Password")
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
+	@Schema(description = "Grade")
 	private Role grade;
 	
 	@CreationTimestamp
+	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
 	
 	public UserEntity() {

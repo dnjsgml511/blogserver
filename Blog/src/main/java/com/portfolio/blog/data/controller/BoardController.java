@@ -20,6 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.service.BoardService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "board", description = "DATA CRUD API")
+
 @RestController
 @RequestMapping("/board")
 @Configuration

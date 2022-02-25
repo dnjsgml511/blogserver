@@ -11,6 +11,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -24,19 +25,27 @@ public class BoardEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Schema(description = "Index")
 	private int idx;
 
+	@Schema(description = "Top pick")
 	private int top;
+	@Schema(description = "Title")
 	private String title;
+	@Schema(description = "Content")
 	private String content;
+	@Schema(description = "Writer")
 	private String writer;
 	
 	@CreationTimestamp
+	@Schema(description = "Write Date")
 	private LocalDateTime writedate;
 	
 	@UpdateTimestamp
+	@Schema(description = "Update Date")
 	private LocalDateTime updatedate;
 	
+	@Schema(description = "Content Hiden")
 	private int hide;
 	
 	public BoardEntity(int idx) {

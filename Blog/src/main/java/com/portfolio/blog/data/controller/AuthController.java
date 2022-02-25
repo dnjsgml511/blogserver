@@ -15,6 +15,9 @@ import com.portfolio.blog.data.service.AuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "auth", description = "USER AUTH API")
 
 @RestController
 public class AuthController {

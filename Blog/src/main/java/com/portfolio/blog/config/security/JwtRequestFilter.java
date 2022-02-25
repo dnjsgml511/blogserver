@@ -2,7 +2,6 @@ package com.portfolio.blog.config.security;
 
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import javax.servlet.FilterChain;
@@ -28,10 +27,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
-
-//	private static final List<String> EXCLUDE_URL = Collections
-//			.unmodifiableList(Arrays.asList("/authenticate", "/signup", "/loginform",
-//					"/swagger-ui/"));
 
 	// 서버 들어올때 토큰 확인 필터
 	@Override
@@ -66,7 +61,6 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		List<String> list = Arrays.asList(Paths.JWT_FILTER_PATH);
 		
-//		return EXCLUDE_URL.stream().anyMatch(exclude -> exclude.equalsIgnoreCase(request.getServletPath()));
 		return list.stream().anyMatch(exclude -> request.getServletPath().indexOf(exclude) != -1);
 	}
 

@@ -12,6 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.blog.data.service.AdminService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "admin", description = "ADMIN API")
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -19,6 +26,13 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 	
+    @Operation(summary = "test hello", description = "hello api example")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK !!"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST !!"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND !!"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR !!")
+    })
 	@GetMapping("/userlist")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	public ResponseEntity<?> userlist(HttpServletRequest request) throws Exception{

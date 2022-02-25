@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 import com.portfolio.blog.data.service.StreamingService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "Stream", description = "STREAMING API")
+
 @Controller
 public class StreamingController {
 	
