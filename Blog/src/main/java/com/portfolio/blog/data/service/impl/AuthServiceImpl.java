@@ -14,6 +14,7 @@ import com.portfolio.blog.data.dto.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
+import com.portfolio.blog.util.RetrunText;
 
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -29,11 +30,11 @@ public class AuthServiceImpl implements AuthService{
 
 		UserEntity check = userRepository.findById(authenticationRequest.getId());
 		if(check == null) {
-			return new ResponseEntity<>("아이디를 다시 입력해주세요", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(!check.getPassword().equals(authenticationRequest.getPassword())) {
-			return new ResponseEntity<>("비밀번호가 틀렸습니다", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -48,20 +49,20 @@ public class AuthServiceImpl implements AuthService{
 	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
 		
 		if(userEntity.getId() == null || userEntity.getId().equals("")) {
-			return new ResponseEntity<>("아이디를 입력해주세요", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(userEntity.getPassword() == null || userEntity.getPassword().equals("")) {	
-			return new ResponseEntity<>("비밀번호를 입력해주세요", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(userEntity.getNickname() == null || userEntity.getNickname().equals("")) {
-			return new ResponseEntity<>("닉네임을 입력해주세요", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.CHECK_NICKNAME, HttpStatus.FORBIDDEN);
 		}
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check != null) {
-			return new ResponseEntity<>("이미 가입 된 아이디입니다", HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(RetrunText.ALREADY.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -69,7 +70,7 @@ public class AuthServiceImpl implements AuthService{
 		claims.put("role", userEntity.getGrade());
 		
 		userRepository.save(userEntity);
-		return new ResponseEntity<>("회원가입이 완료되었습니다", HttpStatus.OK);
+		return new ResponseEntity<>(RetrunText.SIGN_SUCCESS.getValue(), HttpStatus.OK);
 	}
 
 }
