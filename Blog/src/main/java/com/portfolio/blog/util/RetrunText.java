@@ -8,7 +8,8 @@ public enum RetrunText {
 	
 	ALREADY("이미 가입 된 아이디입니다"),
 	
-	SIGN_SUCCESS("회원가입이 완료되었습니다");
+	SIGN_SUCCESS("회원가입이 완료되었습니다"),
+	SAVE_SUCCESS("저장 되었습니다");
 	
 	private final String value;
 	
