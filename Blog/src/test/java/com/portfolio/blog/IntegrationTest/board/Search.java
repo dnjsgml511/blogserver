@@ -1,4 +1,4 @@
-package com.portfolio.blog.controllerTest.board;
+package com.portfolio.blog.IntegrationTest.board;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

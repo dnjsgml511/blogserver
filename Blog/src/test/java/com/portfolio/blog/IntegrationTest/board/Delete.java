@@ -1,8 +1,10 @@
-package com.portfolio.blog.controllerTest.board;
+package com.portfolio.blog.IntegrationTest.board;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -13,8 +15,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.controller.BoardController;
@@ -25,41 +28,52 @@ import com.portfolio.blog.util.ControllerMockPerform;
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
-public class Writing extends ControllerMockPerform{
+public class Delete extends ControllerMockPerform{
 
 	@Autowired
-    MockMvc mockMvc;
-	
+	MockMvc mockMvc;
+
 	@Autowired
 	BoardController boardController;
-	
+
 	@Autowired
 	BoardRepository boardRepository;
-	
+
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
+	
 	String token;
+	String url;
 	
 	@Before
 	public void before() throws Exception {
+		
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("role", Role.ROLE_ADMIN);
 		token = jwtTokenUtil.generateToken("ADMIN", claims);
+		url = "/board/delete";
+		
+		List<BoardEntity> list = new ArrayList<>();
+		for(int i = 0; i < 3; ++i) {
+			BoardEntity set = new BoardEntity("title", "content", "writer");
+			list.add(set);
+		}
+		boardRepository.saveAll(list);
 	}
 
 	@After
 	public void after() throws Exception {
 		System.out.println(boardRepository.findAll());
+		
 		boardRepository.deleteAll();
 	}
-	
-	@Test
-	public void boardInsertController() throws Exception {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		String body = mapper.writeValueAsString(new BoardEntity("title", "content", "writer"));
-		
-		postMockMVC("/board/insert", body, status().isOk(), token);
-	}
 
+	@Test
+	public void boardDeleteController() throws Exception {
+
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+		params.add("idx", "1");
+
+		deleteMockMVC(url, params, status().isOk(), token);
+	}
 }

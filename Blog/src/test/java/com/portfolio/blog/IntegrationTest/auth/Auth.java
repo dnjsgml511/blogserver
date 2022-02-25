@@ -1,4 +1,4 @@
-package com.portfolio.blog.controllerTest.auth;
+package com.portfolio.blog.IntegrationTest.auth;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
