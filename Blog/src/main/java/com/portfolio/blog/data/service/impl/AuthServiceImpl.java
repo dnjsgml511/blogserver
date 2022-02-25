@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.dto.JwtRequest;
@@ -46,6 +47,7 @@ public class AuthServiceImpl implements AuthService{
 	}
 
 	@Override
+	@Transactional
 	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
 		
 		if(userEntity.getId() == null || userEntity.getId().equals("")) {

@@ -45,6 +45,7 @@ public class BoardServiceImpl implements BoardService {
 	 * @param BoardEntity
 	 */
 	@Override
+	@Transactional
 	public void updateBoard(BoardEntity boardEntity) throws Exception {
 		boardRepository.save(boardEntity);
 	}
@@ -54,6 +55,7 @@ public class BoardServiceImpl implements BoardService {
 	 * @param BoardEntity
 	 */
 	@Override
+	@Transactional
 	public void deleteBoard(BoardEntity boardEntity) throws Exception {
 		boardRepository.delete(boardEntity);
 	}
@@ -63,6 +65,7 @@ public class BoardServiceImpl implements BoardService {
 	 * @param BoardEntity
 	 */
 	@Override
+	@Transactional
 	public void hideBoard(BoardEntity boardEntity) throws Exception {
 		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
 		target.setHide(boardEntity.getHide());
@@ -75,6 +78,7 @@ public class BoardServiceImpl implements BoardService {
 	 * @param BoardEntity
 	 */
 	@Override
+	@Transactional
 	public void topPickBoard(BoardEntity boardEntity) throws Exception {
 		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
 		target.setTop(boardEntity.getTop());
