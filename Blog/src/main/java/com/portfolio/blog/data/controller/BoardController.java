@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.BoardService;
+import com.portfolio.blog.util.RetrunText;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -40,7 +41,13 @@ public class BoardController {
 
 	BoardService boardService;
 
-	@PostMapping("insert")
+	/**
+	 * 데이터 저장
+	 * @param boardEntity
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@PostMapping(value = "/insert", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Insert", description = "Data Insert", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
@@ -50,10 +57,16 @@ public class BoardController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> insertBoard(BoardEntity boardEntity) throws Exception {
 		boardService.saveBoard(boardEntity);
-		return new ResponseEntity<>("저장되었습니다", HttpStatus.OK);
+		return new ResponseEntity<>(RetrunText.SAVE_SUCCESS.getValue(), HttpStatus.OK);
 	}
 
-	@GetMapping("topsearch")
+	/**
+	 * 상단 고정 데이터 검색
+	 * @param pageable
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@GetMapping(value = "/topsearch", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Top Search", description = "Data Top Search", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -65,7 +78,15 @@ public class BoardController {
 		return new ResponseEntity<>(boardService.findByTopBoard(pageable), HttpStatus.OK);
 	}
 
-	@GetMapping("search")
+	/**
+	 * 데이터 페이징 검색
+	 * @param pageable
+	 * @param search
+	 * @param request
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@GetMapping(value = "/search", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Search", description = "Data Paging Search", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -74,11 +95,17 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
-			@RequestParam("search") String search, HttpServletRequest request) throws Exception {
+			@RequestParam(name = "search", defaultValue = "" ) String search, HttpServletRequest request) throws Exception {
 		return new ResponseEntity<>(boardService.findByBoard(pageable, search), HttpStatus.OK);
 	}
 
-	@DeleteMapping("delete")
+	/**
+	 * 데이터 삭제
+	 * @param boardEntity
+	 * @return
+	 * @throws Exception
+	 */
+	@DeleteMapping(value = "/delete", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Delete", description = "Data Delete", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -91,7 +118,13 @@ public class BoardController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PatchMapping("update")
+	/**
+	 * 데이터 수정
+	 * @param boardEntity
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@PatchMapping(value = "/update", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Update", description = "Data Update", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -104,7 +137,13 @@ public class BoardController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PatchMapping("hide")
+	/**
+	 * 데이터 숨기기
+	 * @param boardEntity
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@PatchMapping(value = "/hide", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Hide", description = "Data Hide", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -117,7 +156,13 @@ public class BoardController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
-	@PatchMapping("toppick")
+	/**
+	 * 데이터 상단 고정
+	 * @param boardEntity
+	 * @return ResponseEntity<?>
+	 * @throws Exception
+	 */
+	@PatchMapping(value = "/toppick", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Top Pick", description = "Data Top Pick", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),

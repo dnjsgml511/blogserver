@@ -28,7 +28,7 @@ public class StreamingController {
 	@Autowired
 	StreamingService streamingService;
 	
-	@GetMapping(value = "/video/{name}")
+	@GetMapping(value = "/video/{name}", produces = "application/json; charset=utf8")
 	@Tag(name = "Stream")
 	@Operation(summary = "Streaming", description = "Streaming Data", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),

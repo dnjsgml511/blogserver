@@ -29,8 +29,8 @@ public class AdminController {
 	@Autowired
 	AdminService adminService;
 
+	@GetMapping(value = "/userlist", produces = "application/json; charset=utf8")
 	@Tag(name = "admin")
-	@GetMapping("/userlist")
 	@Operation(summary = "User List", description = "User List Data")
 	@PreAuthorize("hasRole('ROLE_ADMIN')")
 	@ApiResponses(
