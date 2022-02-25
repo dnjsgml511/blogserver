@@ -31,9 +31,7 @@ public class StreamingController {
 	@GetMapping(value = "/video/{name}", produces = "application/json; charset=utf8")
 	@Tag(name = "Stream")
 	@Operation(summary = "Streaming", description = "Streaming Data", responses = {
-	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class)))
 		})
 	public ResponseEntity<ResourceRegion> streamingVideo(@RequestHeader HttpHeaders headers, @PathVariable String name) throws IOException{
 		return streamingService.streamingVideos(headers, name);

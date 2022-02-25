@@ -51,8 +51,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Insert", description = "Data Insert", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> insertBoard(BoardEntity boardEntity) throws Exception {
@@ -70,8 +69,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Top Search", description = "Data Top Search", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> topSearchBoard(@PageableDefault(size = 3, page = 0) Pageable pageable) throws Exception {
@@ -90,8 +88,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Search", description = "Data Paging Search", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
@@ -109,8 +106,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Delete", description = "Data Delete", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> deleteBoard(BoardEntity boardEntity) throws Exception {
@@ -128,8 +124,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Update", description = "Data Update", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> updateBoard(BoardEntity boardEntity) throws Exception {
@@ -147,8 +142,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Hide", description = "Data Hide", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> hideBoard(BoardEntity boardEntity) throws Exception {
@@ -166,8 +160,7 @@ public class BoardController {
 	@Tag(name = "board")
 	@Operation(summary = "Data Top Pick", description = "Data Top Pick", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
-	        @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
-	        @ApiResponse(responseCode = "403", description = "AUTH OUT"),	
+	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> toppickBoard(BoardEntity boardEntity) throws Exception {

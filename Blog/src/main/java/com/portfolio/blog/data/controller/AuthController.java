@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,8 +31,8 @@ public class AuthController {
 	@PostMapping(value = "/authenticate", produces = "application/json; charset=utf8")
 	@Tag(name = "auth")
 	@ApiResponses({
-		@ApiResponse(responseCode = "200", description = "OK", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = UserEntity.class))),
-		@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE, schema = @Schema(implementation = String.class))),
+		@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
+		@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
 	})
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
 			HttpSession session) throws Exception {
