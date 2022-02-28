@@ -8,7 +8,7 @@ import com.portfolio.blog.data.entitiy.BoardEntity;
 public interface BoardService {
 
 	// 게시물 내용 가져오기
-	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception;
+	public Page<BoardEntity> findByBoard(String selectuser, Pageable pageable, String search) throws Exception;
 	
 	// 상단 고정 게시물 내용 가져오기
 	public Page<BoardEntity> findByTopBoard(Pageable pageable) throws Exception;

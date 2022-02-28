@@ -2,11 +2,13 @@ package com.portfolio.blog.data.service.impl;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.data.service.BoardService;
@@ -14,6 +16,9 @@ import com.portfolio.blog.data.service.BoardService;
 @Configuration
 @Service
 public class BoardServiceImpl implements BoardService {
+
+	@Autowired
+	JwtTokenUtil jwtTokenUtil;
 
 	private BoardRepository boardRepository;
 
@@ -26,8 +31,8 @@ public class BoardServiceImpl implements BoardService {
 	 * @param Pageable
 	 */
 	@Override
-	public Page<BoardEntity> findByBoard(Pageable pageable, String search) throws Exception {
-		return boardRepository.findByTitleLikeAndTopAndHide("%" + search + "%", 0, 0, pageable);
+	public Page<BoardEntity> findByBoard(String selectuser, Pageable pageable, String search) throws Exception {
+		return boardRepository.findByTitleLikeAndTopAndHideAndWriter("%" + search + "%", 0, 0, selectuser, pageable);
 	}
 
 	/**
@@ -37,7 +42,6 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public void saveBoard(BoardEntity boardEntity) throws Exception {
-		System.out.println(boardEntity);
 		boardRepository.save(boardEntity);
 	}
 

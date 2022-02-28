@@ -1,7 +1,5 @@
 package com.portfolio.blog.data.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -12,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,7 +85,7 @@ public class BoardController {
 	 * @return ResponseEntity<?>
 	 * @throws Exception
 	 */
-	@GetMapping(value = "/search", produces = "application/json; charset=utf8")
+	@GetMapping(value = "/search/{selectuser}", produces = "application/json; charset=utf8")
 	@Tag(name = "board")
 	@Operation(summary = "Data Search", description = "Data Paging Search", responses = {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
@@ -94,8 +93,8 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
-			@RequestParam(name = "search", defaultValue = "" ) String search, HttpServletRequest request) throws Exception {
-		return new ResponseEntity<>(boardService.findByBoard(pageable, search), HttpStatus.OK);
+			@RequestParam(name = "search", defaultValue = "" ) String search, @PathVariable String selectuser) throws Exception {
+		return new ResponseEntity<>(boardService.findByBoard(selectuser, pageable, search), HttpStatus.OK);
 	}
 
 	/**
