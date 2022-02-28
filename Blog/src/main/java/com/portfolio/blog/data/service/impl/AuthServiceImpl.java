@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
-import com.portfolio.blog.data.dto.JwtRequest;
 import com.portfolio.blog.data.dto.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
@@ -27,9 +26,9 @@ public class AuthServiceImpl implements AuthService{
 	private UserRepository userRepository;
 	
 	@Override
-	public ResponseEntity<?> createAuthenticationToken(JwtRequest authenticationRequest) throws Exception {
-
-		UserEntity check = userRepository.findById(authenticationRequest.getId());
+	public ResponseEntity<?> createAuthenticationToken(UserEntity userEntity) throws Exception {
+		
+		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check == null) {
 			return new ResponseEntity<>(ReturnText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
 		}
@@ -38,14 +37,14 @@ public class AuthServiceImpl implements AuthService{
 			return new ResponseEntity<>(ReturnText.CHECK_ACTIVE.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
-		if(!check.getPassword().equals(authenticationRequest.getPassword())) {
+		if(!check.getPassword().equals(userEntity.getPassword())) {
 			return new ResponseEntity<>(ReturnText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
 		claims.put("role", check.getGrade());
 		
-		final String token = jwtTokenUtil.generateToken(authenticationRequest.getId(), claims);
+		final String token = jwtTokenUtil.generateToken(userEntity.getId(), claims);
 		
 		return new ResponseEntity<>(new UserMapper(check, token), HttpStatus.OK);
 	}

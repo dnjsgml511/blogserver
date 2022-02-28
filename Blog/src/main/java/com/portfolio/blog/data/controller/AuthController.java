@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.portfolio.blog.data.dto.JwtRequest;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.AuthService;
 
@@ -36,9 +35,8 @@ public class AuthController {
 		@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
 		@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
 	})
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
-			HttpSession session) throws Exception {
-		return service.createAuthenticationToken(authenticationRequest);
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserEntity userEntity, HttpSession session) throws Exception {
+		return service.createAuthenticationToken(userEntity);
 	}
 
 	@PostMapping(value = "/signup", produces = "application/json; charset=utf8")

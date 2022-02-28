@@ -58,6 +58,12 @@ public class UserEntity {
 		this.id = id;
 	}
 
+	public UserEntity(String id, String password, int active) {
+		this.id = id;
+		this.password = password;
+		this.active = active;
+	}
+	
 	public UserEntity(String id, String password) {
 		this.id = id;
 		this.password = password;
@@ -69,12 +75,20 @@ public class UserEntity {
 		this.password = password;
 		this.grade = Role.ROLE_USER;
 	}
-
+	
 	public UserEntity(String id, String nickname, String password, Role grade) {
 		this.id = id;
 		this.nickname = nickname;
 		this.password = password;
 		this.grade = grade;
+	}
+
+	public UserEntity(String id, String nickname, String password, Role grade, int active) {
+		this.id = id;
+		this.nickname = nickname;
+		this.password = password;
+		this.grade = grade;
+		this.active = active;
 	}
 
 	@SuppressWarnings("unused")
