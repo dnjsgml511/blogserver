@@ -12,7 +12,9 @@ public enum ReturnText {
 	USER_ACTIVE("님을 승인하였습니다"),
 	USER_BLOCK("님은 블락처리 하였습니다"),
 	SIGN_SUCCESS("회원가입이 완료되었습니다"),
-	SAVE_SUCCESS("저장 되었습니다");
+	SAVE_SUCCESS("저장 되었습니다"),
+	
+	SELECT_FAILE("선택한 값을 확인하세요");
 	
 	private final String value;
 	

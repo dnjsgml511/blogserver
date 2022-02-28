@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,5 +41,15 @@ public class AdminController {
 	public ResponseEntity<?> userlist(HttpServletRequest request, UserEntity userEntity) throws Exception {
 		return new ResponseEntity<>(adminService.userlist(userEntity), HttpStatus.OK);
 	}
-
+	
+	@PostMapping(value = "/userselect", produces = "application/json; charset=utf8")
+	@Tag(name = "admin")
+	@Operation(summary = "Change User", description = "Change User")
+	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@ApiResponses(
+		@ApiResponse(responseCode = "200", description = "Change User", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
+	)
+	public ResponseEntity<?> userselect(HttpServletRequest request, @RequestBody UserEntity userEntity) throws Exception {
+		return adminService.userselect(userEntity);
+	}
 }
