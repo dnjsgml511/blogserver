@@ -37,6 +37,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public void saveBoard(BoardEntity boardEntity) throws Exception {
+		System.out.println(boardEntity);
 		boardRepository.save(boardEntity);
 	}
 
@@ -67,7 +68,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	@Transactional
 	public void hideBoard(BoardEntity boardEntity) throws Exception {
-		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).get();
+		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).orElseThrow(() -> new Exception());
+		System.out.println(target);
 		target.setHide(boardEntity.getHide());
 
 		boardRepository.save(target);
