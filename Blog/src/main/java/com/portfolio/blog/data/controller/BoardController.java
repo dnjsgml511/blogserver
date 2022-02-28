@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.BoardService;
-import com.portfolio.blog.util.RetrunText;
+import com.portfolio.blog.util.ReturnText;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -33,6 +34,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/board")
 @Configuration
+@CrossOrigin("*")
 public class BoardController {
 
 	public BoardController(@RequestBody BoardService boardService) {
@@ -54,9 +56,9 @@ public class BoardController {
 	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
-	public ResponseEntity<?> insertBoard(BoardEntity boardEntity) throws Exception {
+	public ResponseEntity<?> insertBoard(@RequestBody BoardEntity boardEntity) throws Exception {
 		boardService.saveBoard(boardEntity);
-		return new ResponseEntity<>(RetrunText.SAVE_SUCCESS.getValue(), HttpStatus.OK);
+		return new ResponseEntity<>(ReturnText.SAVE_SUCCESS.getValue(), HttpStatus.OK);
 	}
 
 	/**
