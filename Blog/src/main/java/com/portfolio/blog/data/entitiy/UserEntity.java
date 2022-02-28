@@ -21,66 +21,72 @@ import lombok.ToString;
 
 @Schema(description = "사용자")
 
-@Getter @Setter @Entity
+@Getter
+@Setter
+@Entity
 @Table(name = "users")
 @ToString
 public class UserEntity {
-	
+
 	@Schema(description = "Own Number")
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int num;
-	
+
 	@Schema(description = "ID")
 	private String id;
 	@Schema(description = "NickName")
 	private String nickname;
 	@Schema(description = "Password")
 	private String password;
-	
+	@Schema(description = "Active")
+	private int active;
+
 	@Enumerated(EnumType.STRING)
 	@Schema(description = "Grade")
 	private Role grade;
-	
+
 	@CreationTimestamp
 	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
-	
+
 	public UserEntity() {
-		
+
 	}
-	
-	public UserEntity(String id, String password){
+
+	public UserEntity(String id) {
+		this.id = id;
+	}
+
+	public UserEntity(String id, String password) {
 		this.id = id;
 		this.password = password;
 	}
-	
-	
-	public UserEntity(String id, String nickname, String password){
+
+	public UserEntity(String id, String nickname, String password) {
 		this.id = id;
 		this.nickname = nickname;
 		this.password = password;
 		this.grade = Role.ROLE_USER;
 	}
-	
-	public UserEntity(String id, String nickname, String password, Role grade){
+
+	public UserEntity(String id, String nickname, String password, Role grade) {
 		this.id = id;
 		this.nickname = nickname;
 		this.password = password;
 		this.grade = grade;
 	}
-	
+
 	@SuppressWarnings("unused")
 	public UserEntity(UserEntity userEntity) {
 		this.id = userEntity.getId();
 		this.nickname = userEntity.getNickname();
 		this.password = userEntity.getPassword();
-		if(userEntity.getGrade() == null) {
+		if (userEntity.getGrade() == null) {
 			this.grade = Role.ROLE_USER;
-		}else {
+		} else {
 			this.grade = userEntity.getGrade();
 		}
 	}
-	
-	
+
 }

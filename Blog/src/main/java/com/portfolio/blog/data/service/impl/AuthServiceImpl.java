@@ -15,7 +15,7 @@ import com.portfolio.blog.data.dto.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
-import com.portfolio.blog.util.RetrunText;
+import com.portfolio.blog.util.ReturnText;
 
 @Service
 public class AuthServiceImpl implements AuthService{
@@ -31,11 +31,15 @@ public class AuthServiceImpl implements AuthService{
 
 		UserEntity check = userRepository.findById(authenticationRequest.getId());
 		if(check == null) {
-			return new ResponseEntity<>(RetrunText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
+		}
+		
+		if(check.getActive() == 0) {
+			return new ResponseEntity<>(ReturnText.CHECK_ACTIVE.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(!check.getPassword().equals(authenticationRequest.getPassword())) {
-			return new ResponseEntity<>(RetrunText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -51,20 +55,20 @@ public class AuthServiceImpl implements AuthService{
 	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
 		
 		if(userEntity.getId() == null || userEntity.getId().equals("")) {
-			return new ResponseEntity<>(RetrunText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(userEntity.getPassword() == null || userEntity.getPassword().equals("")) {	
-			return new ResponseEntity<>(RetrunText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		if(userEntity.getNickname() == null || userEntity.getNickname().equals("")) {
-			return new ResponseEntity<>(RetrunText.CHECK_NICKNAME, HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_NICKNAME, HttpStatus.FORBIDDEN);
 		}
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check != null) {
-			return new ResponseEntity<>(RetrunText.ALREADY.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.ALREADY.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -73,7 +77,25 @@ public class AuthServiceImpl implements AuthService{
 		
 		userRepository.save(userEntity);
 		
-		return new ResponseEntity<>(RetrunText.SIGN_SUCCESS.getValue(), HttpStatus.OK);
+		return new ResponseEntity<>(ReturnText.SIGN_SUCCESS.getValue(), HttpStatus.OK);
+	}
+
+	@Override
+	public ResponseEntity<?> useractive(UserEntity userEntity) throws Exception {
+		UserEntity user = userRepository.findById(userEntity.getId());
+		user.setActive(1);
+		userRepository.save(user);
+		
+		return new ResponseEntity<>(user.getNickname() + ReturnText.USER_ACTIVE.getValue(), HttpStatus.OK);
+	}
+	
+	@Override
+	public ResponseEntity<?> userblock(UserEntity userEntity) throws Exception {
+		UserEntity user = userRepository.findById(userEntity.getId());
+		user.setActive(0);
+		userRepository.save(user);
+		
+		return new ResponseEntity<>(user.getNickname() + ReturnText.USER_BLOCK.getValue(), HttpStatus.OK);
 	}
 
 }

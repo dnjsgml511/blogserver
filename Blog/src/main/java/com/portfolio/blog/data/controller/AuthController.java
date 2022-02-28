@@ -1,10 +1,11 @@
 package com.portfolio.blog.data.controller;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @Tag(name = "auth", description = "USER AUTH API")
 
 @RestController
+@CrossOrigin("*")
 public class AuthController {
 	
 	@Autowired
@@ -45,8 +47,31 @@ public class AuthController {
     	@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
     	@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
     })
-	public ResponseEntity<?> signup(@RequestBody UserEntity userEntity, HttpServletResponse response) throws Exception {
+	public ResponseEntity<?> signup(@RequestBody UserEntity userEntity) throws Exception {
 		return service.signup(userEntity);
+	}
+	
+	@PostMapping(value = "/useractive", produces = "application/json; charset=utf8")
+	@Tag(name = "auth")
+	@Operation(summary = "User Active", description = "User Active", responses = {
+			@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
+			@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
+	})
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<?> useractive(@RequestBody UserEntity userEntity) throws Exception {
+		return service.useractive(userEntity);
+	}
+
+	
+	@PostMapping(value = "/userblock", produces = "application/json; charset=utf8")
+	@Tag(name = "auth")
+	@Operation(summary = "User Block", description = "User Block", responses = {
+			@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
+			@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
+	})
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	public ResponseEntity<?> userblock(@RequestBody UserEntity userEntity) throws Exception {
+		return service.userblock(userEntity);
 	}
 
 }
