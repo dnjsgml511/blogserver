@@ -129,4 +129,20 @@ public class JwtTokenUtil {
 		return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
 	}
 
+	// 관리자 토큰 생성
+	public String createAdmintoken(String id) {
+		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_ADMIN);
+		return jwtTokenUtil.generateToken(id, claims);
+	}
+	
+	// 유저 토큰 생성
+	public String createUsertoekn(String id) {
+		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_USER);
+		return jwtTokenUtil.generateToken(id, claims);
+	}
+	
 }
