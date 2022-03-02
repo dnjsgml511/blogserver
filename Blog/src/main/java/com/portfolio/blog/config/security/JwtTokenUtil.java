@@ -137,6 +137,13 @@ public class JwtTokenUtil {
 		return jwtTokenUtil.generateToken(id, claims);
 	}
 	
+	public String createManagertoken(String id) {
+		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
+		HashMap<String, Object> claims = new HashMap<String, Object>();
+		claims.put("role", Role.ROLE_MANAGER);
+		return jwtTokenUtil.generateToken(id, claims);
+	}
+	
 	// 유저 토큰 생성
 	public String createUsertoekn(String id) {
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
