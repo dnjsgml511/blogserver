@@ -1,6 +1,5 @@
 package com.portfolio.blog.data.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
-import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AdminService;
@@ -44,24 +42,15 @@ public class AdminServiceImpl implements AdminService {
 		id = id == null ? "" : id;
 		
 		if(id.equals("")) {
-			return new ResponseEntity<>(ReturnText.SELECT_FAILE, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(ReturnText.SELECT_FAIL.getValue(), HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
 		UserEntity user = userRepository.findById(id);
 		if(user == null) {
-			return new ResponseEntity<>(ReturnText.SELECT_FAILE, HttpStatus.UNPROCESSABLE_ENTITY);
+			return new ResponseEntity<>(ReturnText.SELECT_FAIL.getValue(), HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		// 변경한 계정 토큰 생성
-		HashMap<String, Object> claims = new HashMap<String, Object>();
-		claims.put("role", Role.ROLE_USER);
-		String token = jwtTokenUtil.generateToken(id, claims);
-		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("data", user);
-		map.put("usertoken", token);
-		
-		return new ResponseEntity<>(map, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>(user, HttpStatus.FORBIDDEN);
 	}
 
 }
