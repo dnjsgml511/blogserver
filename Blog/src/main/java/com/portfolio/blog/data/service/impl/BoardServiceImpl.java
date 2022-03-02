@@ -1,5 +1,6 @@
 package com.portfolio.blog.data.service.impl;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,8 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
-
+	
+	@Autowired
 	private BoardRepository boardRepository;
 
 	public BoardServiceImpl(BoardRepository boardRepository) {
@@ -31,8 +33,15 @@ public class BoardServiceImpl implements BoardService {
 	 * @param Pageable
 	 */
 	@Override
-	public Page<BoardEntity> findByBoard(String selectuser, Pageable pageable, String search) throws Exception {
-		return boardRepository.findByTitleLikeAndTopAndHideAndWriter("%" + search + "%", 0, 0, selectuser, pageable);
+	public Page<BoardEntity> findByBoard(Pageable pageable, String search, String user, HttpServletRequest request) throws Exception {
+		search = "%" + search + "%";
+		
+		boolean adminCheck = request.isUserInRole("ROLE_ADMIN");
+		if(adminCheck && user.equals("admin")) {
+			return boardRepository.findByTitleLikeAndTopAndHide(search, 0, 0, pageable);
+		}else {
+			return boardRepository.findByTitleLikeAndTopAndHideAndWriterLike(search, 0, 0, user, pageable);
+		}
 	}
 
 	/**
