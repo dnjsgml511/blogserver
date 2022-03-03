@@ -41,11 +41,11 @@ class UserSearchTest extends ControllerMockPerform{
 	MultiValueMap<String, String> params;
 	List<UserEntity> list;
 	
-	String SIGNUP_URL, ADMIN_TOKEN, MANAGER_TOKEN, USER_TOKEN;
+	String SEARCH_URL, ADMIN_TOKEN, MANAGER_TOKEN, USER_TOKEN;
 	
     @BeforeAll
     void beforeAll() {
-    	SIGNUP_URL = "/signup";
+    	SEARCH_URL = "/admin/userlist";
     	ADMIN_TOKEN = jwtTokenUtil.createAdmintoken("adminActive");
     	MANAGER_TOKEN = jwtTokenUtil.createManagertoken("managerActive");
     	USER_TOKEN = jwtTokenUtil.createUsertoken("userActive");
@@ -83,13 +83,13 @@ class UserSearchTest extends ControllerMockPerform{
 			@Test
 			@DisplayName("관리자 기본 검색")
 			void adminSearch() throws Exception {
-				getMockMVC("/admin/userlist", params, status().isOk(), ADMIN_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), ADMIN_TOKEN);
 			}
 			
 			@Test
 			@DisplayName("매니저 기본 검색")
 			void managerSearch() throws Exception {
-				getMockMVC("/admin/userlist", params, status().isOk(), MANAGER_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), MANAGER_TOKEN);
 			}
 			
 		}
@@ -102,14 +102,14 @@ class UserSearchTest extends ControllerMockPerform{
 			@DisplayName("관리자의 아이디 검색")
 			void adminIDSearch() throws Exception{
 				params.add("id", "admin");
-				getMockMVC("/admin/userlist", params, status().isOk(), ADMIN_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), ADMIN_TOKEN);
 			}
 			
 			@Test
 			@DisplayName("매니저의 아이디 검색")
 			void managerIDSearch() throws Exception{
 				params.add("id", "admin");
-				getMockMVC("/admin/userlist", params, status().isOk(), MANAGER_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), MANAGER_TOKEN);
 			}
 			
 		}
@@ -122,14 +122,14 @@ class UserSearchTest extends ControllerMockPerform{
 			@DisplayName("관리자의 회사명 검색")
 			void adminNicknameSearch() throws Exception{
 				params.add("nickname", "관리자");
-				getMockMVC("/admin/userlist", params, status().isOk(), ADMIN_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), ADMIN_TOKEN);
 			}
 			
 			@Test
 			@DisplayName("매니저의 회사명 검색")
 			void managerNicknameSearch() throws Exception{
 				params.add("nickname", "관리자");
-				getMockMVC("/admin/userlist", params, status().isOk(), MANAGER_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), MANAGER_TOKEN);
 			}
 			
 		}
@@ -142,14 +142,14 @@ class UserSearchTest extends ControllerMockPerform{
 			@DisplayName("관리자의 등급 검색")
 			void adminGradeSearch() throws Exception{
 				params.add("grade", "ROLE_ADMIN");
-				getMockMVC("/admin/userlist", params, status().isOk(), ADMIN_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), ADMIN_TOKEN);
 			}
 			
 			@Test
 			@DisplayName("매니저의 등급 검색")
 			void managerGradeSearch() throws Exception{
 				params.add("grade", "ROLE_MANAGER");
-				getMockMVC("/admin/userlist", params, status().isOk(), MANAGER_TOKEN);
+				getMockMVC(SEARCH_URL, params, status().isOk(), MANAGER_TOKEN);
 			}
 			
 		}
@@ -163,28 +163,28 @@ class UserSearchTest extends ControllerMockPerform{
 		@Test
 		@DisplayName("사용자의 기본검색")
 		void userSearch() throws Exception {
-			getMockMVC("/admin/userlist", params, status().isForbidden(), USER_TOKEN);
+			getMockMVC(SEARCH_URL, params, status().isForbidden(), USER_TOKEN);
 		}
 		
 		@Test
 		@DisplayName("사용자의 아이디 검색")
 		void userIDSearch() throws Exception{
 			params.add("id", "admin");
-			getMockMVC("/admin/userlist", params, status().isForbidden(), USER_TOKEN);
+			getMockMVC(SEARCH_URL, params, status().isForbidden(), USER_TOKEN);
 		}
 		
 		@Test
 		@DisplayName("사용자의 회사명 검색")
 		void userNicknameSearch() throws Exception{
 			params.add("nickname", "관리자");
-			getMockMVC("/admin/userlist", params, status().isForbidden(), USER_TOKEN);
+			getMockMVC(SEARCH_URL, params, status().isForbidden(), USER_TOKEN);
 		}
 		
 		@Test
 		@DisplayName("사용자의 등급 검색")
 		void userGradeSearch() throws Exception{
 			params.add("grade", "ROLE_ADMIN");
-			getMockMVC("/admin/userlist", params, status().isForbidden(), USER_TOKEN);
+			getMockMVC(SEARCH_URL, params, status().isForbidden(), USER_TOKEN);
 		}
 		
 		
