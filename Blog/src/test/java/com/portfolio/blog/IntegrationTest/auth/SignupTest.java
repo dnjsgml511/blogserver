@@ -91,73 +91,83 @@ class SignupTest extends ControllerMockPerform{
 	@Nested
 	@DisplayName("실패")
 	class fail {
-		@Test
-		@DisplayName("아이디 미기입으로 인한 실패")
-		void EmptyID() throws Exception {
-			UserEntity user = new UserEntity("", "관리자", "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
+		
+		@Nested
+		@DisplayName("아이디 관련 실패")
+		class IdFail{
+			@Test
+			@DisplayName("미기입으로 인한 실패")
+			void EmptyID() throws Exception {
+				UserEntity user = new UserEntity("", "관리자", "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
+			
+			@Test
+			@DisplayName("Null로 인한 실패")
+			void NullID() throws Exception {
+				UserEntity user = new UserEntity(null, "관리자", "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
+			
+			@Test
+			@DisplayName("중복으로 인한 실패")
+			void OverlappingID() throws Exception {
+				UserEntity user = new UserEntity("userActive", "user", "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
 		}
 		
-		@Test
-		@DisplayName("아이디 Null로 인한 실패")
-		void NullID() throws Exception {
-			UserEntity user = new UserEntity(null, "관리자", "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
+		@Nested
+		@DisplayName("비밀번호 관련 실패")
+		class PasswordFail{
+			@Test
+			@DisplayName("미기입으로 인한 실패")
+			void EmptyPassword() throws Exception {
+				UserEntity user = new UserEntity("admin", "관리자", "");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
+			
+			@Test
+			@DisplayName("Null로 인한 실패")
+			void NullPassword() throws Exception {
+				UserEntity user = new UserEntity("admin", "관리자", null);
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
 		}
 		
-		@Test
-		@DisplayName("비밀번호 미기입으로 인한 실패")
-		void EmptyPassword() throws Exception {
-			UserEntity user = new UserEntity("admin", "관리자", "");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
+		@Nested
+		@DisplayName("회사명 관련 실패")
+		class NicknameFail{
+			@Test
+			@DisplayName("미기입으로 인한 실패")
+			void EmptyNickname() throws Exception {
+				UserEntity user = new UserEntity("admin", "", "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
+			
+			@Test
+			@DisplayName("Null로 인한 실패")
+			void NullNickname() throws Exception {
+				UserEntity user = new UserEntity("admin", null, "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
+			
+			@Test
+			@DisplayName("중복으로 인한 실패")
+			void OverlappingNickname() throws Exception {
+				UserEntity user = new UserEntity("admin", "활동사용자", "1234");
+				String body = mapper.writeValueAsString(user);
+				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			}
 		}
 		
-		@Test
-		@DisplayName("비밀번호 Null로 인한 실패")
-		void NullPassword() throws Exception {
-			UserEntity user = new UserEntity("admin", "관리자", null);
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
-		}
-		
-		@Test
-		@DisplayName("회사명 미기입으로 인한 실패")
-		void EmptyNickname() throws Exception {
-			UserEntity user = new UserEntity("admin", "", "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
-		}
-		
-		@Test
-		@DisplayName("회사명 Null로 인한 실패")
-		void NullNickname() throws Exception {
-			UserEntity user = new UserEntity("admin", null, "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
-		}
 	}
 	
-	@Nested
-	@DisplayName("중복")
-	class Overlapping {
-		
-		@Test
-		@DisplayName("아이디 중복으로 인한 실패")
-		void OverlappingID() throws Exception {
-			UserEntity user = new UserEntity("userActive", "user", "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
-		}
-		
-		@Test
-		@DisplayName("회사명 중복으로 인한 실패")
-		void OverlappingNickname() throws Exception {
-			UserEntity user = new UserEntity("admin", "활동사용자", "1234");
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isForbidden());
-		}
-	}
 }
