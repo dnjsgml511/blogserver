@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -68,9 +67,6 @@ class AuthTest extends ControllerMockPerform{
     void beforeEach() {
     	mapper = new ObjectMapper();
     }
- 
-    @AfterEach
-    void afterEach() {}
     
 	@Nested
 	@DisplayName("성공")
@@ -104,64 +100,22 @@ class AuthTest extends ControllerMockPerform{
 		
 		@Nested
 		@DisplayName("ID 관련 실패")
-		class wrongID {
+		class FailID {
 			@Test
-			@DisplayName("미입력 관리자 로그인 실패")
-			void admin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("", "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("미입력 관리자 로그인 실패")
-			void manager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("", "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("미입력 사용자 로그인 실패")
-			void user() throws Exception {
+			@DisplayName("아이디 미입력 로그인 실패")
+			void emptyID() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("", "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
 			@Test
-			@DisplayName("Null ID 관리자 로그인 실패")
-			void nullAdmin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity(null, "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("Null ID 관리자 로그인 실패")
-			void nullManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity(null, "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("Null ID 사용자 로그인 실패")
-			void nullUser() throws Exception {
+			@DisplayName("아이디 NULL 로그인 실패")
+			void nullID() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity(null, "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
 			@Test
-			@DisplayName("틀린 관리자 로그인 실패")
-			void wrongAdmin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("wrong", "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("틀린 관리자 로그인 실패")
-			void wrongManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("wrong", "1234"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("틀린 사용자 로그인 실패")
-			void wrongUser() throws Exception {
+			@DisplayName("가입 안 된 아이디 로그인 실패")
+			void wrongID() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("wrong", "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
@@ -169,25 +123,23 @@ class AuthTest extends ControllerMockPerform{
 		
 		@Nested
 		@DisplayName("비밀번호 관련 실패")
-		class wrongPASSWORD {
+		class FailPASSWORD {
 			@Test
-			@DisplayName("미입력 관리자 로그인 실패")
-			void admin() throws Exception {
+			@DisplayName("비밀번호 미입력 관리자  로그인 실패")
+			void emptyAmin() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("adminActive", ""));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
-			@DisplayName("미입력 관리자 로그인 실패")
-			void manager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", ""));
+			@DisplayName("비밀번호 미입력 매니저  로그인 실패")
+			void emptyManager() throws Exception {
+				String body = mapper.writeValueAsString(new UserEntity("managerActive", ""));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
-			@DisplayName("미입력 사용자 로그인 실패")
-			void user() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", ""));
+			@DisplayName("비밀번호 미입력 사용자 로그인 실패")
+			void emptyUser() throws Exception {
+				String body = mapper.writeValueAsString(new UserEntity("userActive", ""));
 				postMockMVC(url, body, status().isForbidden());
 			}
 			@Test
@@ -196,18 +148,16 @@ class AuthTest extends ControllerMockPerform{
 				String body = mapper.writeValueAsString(new UserEntity("adminActive", null));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
-			@DisplayName("Null 비밀번호 관리자 로그인 실패")
+			@DisplayName("Null 비밀번호 매니저 로그인 실패")
 			void nullManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", null));
+				String body = mapper.writeValueAsString(new UserEntity("managerActive", null));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
 			@DisplayName("Null 비밀번호 사용자 로그인 실패")
 			void nullUser() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", null));
+				String body = mapper.writeValueAsString(new UserEntity("userActive", null));
 				postMockMVC(url, body, status().isForbidden());
 			}
 			@Test
@@ -216,14 +166,12 @@ class AuthTest extends ControllerMockPerform{
 				String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
 			@DisplayName("틀린 비밀번호 관리자 로그인 실패")
 			void wrongManager() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
 			@DisplayName("틀린 비밀번호 사용자 로그인 실패")
 			void wrongUser() throws Exception {
@@ -241,14 +189,12 @@ class AuthTest extends ControllerMockPerform{
 				String body = mapper.writeValueAsString(new UserEntity("adminBlock", "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
 			@DisplayName("비활성 관리자 로그인 실패")
 			void manager() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("adminBlock", "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
-			
 			@Test
 			@DisplayName("비활성 사용자 로그인 실패")
 			void user() throws Exception {
