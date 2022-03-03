@@ -11,5 +11,6 @@ public interface UserRepository extends JpaRepository<UserEntity, Integer>{
 	public UserEntity findById(String id) throws Exception;
 	public List<UserEntity> findByIdLike(String id) throws Exception;
 	public List<UserEntity> findByNicknameLike(String nickname) throws Exception;
+	public UserEntity findByNickname(String nickname) throws Exception;
 	public List<UserEntity> findByGrade(Role grade) throws Exception;
 }

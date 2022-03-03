@@ -28,8 +28,8 @@ import lombok.ToString;
 @ToString
 public class UserEntity {
 
-	@Schema(description = "Own Number")
 	@Id
+	@Schema(description = "Own Number")
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int num;
 

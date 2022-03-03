@@ -34,7 +34,7 @@ public class AdminController {
 	@GetMapping(value = "/userlist", produces = "application/json; charset=utf8")
 	@Tag(name = "admin")
 	@Operation(summary = "User List", description = "User List Data")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	@ApiResponses(
 		@ApiResponse(responseCode = "200", description = "Get User list", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)
@@ -45,7 +45,7 @@ public class AdminController {
 	@PostMapping(value = "/userselect", produces = "application/json; charset=utf8")
 	@Tag(name = "admin")
 	@Operation(summary = "Change User", description = "Change User")
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	@ApiResponses(
 		@ApiResponse(responseCode = "200", description = "Change User", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)

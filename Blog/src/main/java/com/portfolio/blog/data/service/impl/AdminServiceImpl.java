@@ -50,7 +50,7 @@ public class AdminServiceImpl implements AdminService {
 			return new ResponseEntity<>(ReturnText.SELECT_FAIL.getValue(), HttpStatus.UNPROCESSABLE_ENTITY);
 		}
 		
-		return new ResponseEntity<>(user, HttpStatus.FORBIDDEN);
+		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
 
 }
