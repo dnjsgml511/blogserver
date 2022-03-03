@@ -62,12 +62,16 @@ public class AuthServiceImpl implements AuthService{
 		}
 		
 		if(userEntity.getNickname() == null || userEntity.getNickname().equals("")) {
-			return new ResponseEntity<>(ReturnText.CHECK_NICKNAME, HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.CHECK_NICKNAME.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check != null) {
-			return new ResponseEntity<>(ReturnText.ALREADY.getValue(), HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(ReturnText.ALREADY_ID.getValue(), HttpStatus.FORBIDDEN);
+		}
+		check = userRepository.findByNickname(userEntity.getNickname());
+		if(check != null) {
+			return new ResponseEntity<>(ReturnText.ALREADY_NICKNAME.getValue(), HttpStatus.FORBIDDEN);
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
