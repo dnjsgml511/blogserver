@@ -102,13 +102,13 @@ class AuthTest extends ControllerMockPerform{
 		@DisplayName("ID 관련 실패")
 		class FailID {
 			@Test
-			@DisplayName("아이디 미입력 로그인 실패")
+			@DisplayName("미입력 로그인 실패")
 			void emptyID() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity("", "1234"));
 				postMockMVC(url, body, status().isForbidden());
 			}
 			@Test
-			@DisplayName("아이디 NULL 로그인 실패")
+			@DisplayName("NULL 로그인 실패")
 			void nullID() throws Exception {
 				String body = mapper.writeValueAsString(new UserEntity(null, "1234"));
 				postMockMVC(url, body, status().isForbidden());
