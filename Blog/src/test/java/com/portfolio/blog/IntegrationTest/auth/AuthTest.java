@@ -124,59 +124,74 @@ class AuthTest extends ControllerMockPerform{
 		@Nested
 		@DisplayName("비밀번호 관련 실패")
 		class FailPASSWORD {
-			@Test
-			@DisplayName("비밀번호 미입력 관리자  로그인 실패")
-			void emptyAmin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", ""));
-				postMockMVC(url, body, status().isForbidden());
+			
+			@Nested
+			@DisplayName("비밀번호 미입력")
+			class emptyPassword{
+				@Test
+				@DisplayName("관리자  로그인 실패")
+				void emptyAmin() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("adminActive", ""));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("매니저  로그인 실패")
+				void emptyManager() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("managerActive", ""));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("사용자 로그인 실패")
+				void emptyUser() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("userActive", ""));
+					postMockMVC(url, body, status().isForbidden());
+				}
 			}
-			@Test
-			@DisplayName("비밀번호 미입력 매니저  로그인 실패")
-			void emptyManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("managerActive", ""));
-				postMockMVC(url, body, status().isForbidden());
+			
+			@Nested
+			@DisplayName("Null 비밀번호 입력")
+			class nullPassword{
+				@Test
+				@DisplayName("관리자 로그인 실패")
+				void nullAdmin() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("adminActive", null));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("매니저 로그인 실패")
+				void nullManager() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("managerActive", null));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("사용자 로그인 실패")
+				void nullUser() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("userActive", null));
+					postMockMVC(url, body, status().isForbidden());
+				}
 			}
-			@Test
-			@DisplayName("비밀번호 미입력 사용자 로그인 실패")
-			void emptyUser() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("userActive", ""));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("Null 비밀번호 관리자 로그인 실패")
-			void nullAdmin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", null));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("Null 비밀번호 매니저 로그인 실패")
-			void nullManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("managerActive", null));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("Null 비밀번호 사용자 로그인 실패")
-			void nullUser() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("userActive", null));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("틀린 비밀번호 관리자 로그인 실패")
-			void wrongAdmin() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("틀린 비밀번호 관리자 로그인 실패")
-			void wrongManager() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
-				postMockMVC(url, body, status().isForbidden());
-			}
-			@Test
-			@DisplayName("틀린 비밀번호 사용자 로그인 실패")
-			void wrongUser() throws Exception {
-				String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
-				postMockMVC(url, body, status().isForbidden());
+			
+			@Nested
+			@DisplayName("틀린 비밀번호 입력")
+			class wrongPassword{
+				@Test
+				@DisplayName("틀린 비밀번호 관리자 로그인 실패")
+				void wrongAdmin() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("틀린 비밀번호 관리자 로그인 실패")
+				void wrongManager() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
+					postMockMVC(url, body, status().isForbidden());
+				}
+				@Test
+				@DisplayName("틀린 비밀번호 사용자 로그인 실패")
+				void wrongUser() throws Exception {
+					String body = mapper.writeValueAsString(new UserEntity("adminActive", "wrong"));
+					postMockMVC(url, body, status().isForbidden());
+				}
 			}
 		}
 		
