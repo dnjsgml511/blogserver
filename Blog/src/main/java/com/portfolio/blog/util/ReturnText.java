@@ -7,7 +7,8 @@ public enum ReturnText {
 	CHECK_NICKNAME("닉네임을 다시 확인해주세요"),
 	CHECK_ACTIVE("관리자의 승인 후 사용하실 수 있습니다"),
 	
-	ALREADY("이미 가입 된 아이디입니다"),
+	ALREADY_ID("이미 가입 된 아이디입니다"),
+	ALREADY_NICKNAME("이미 가입 된 회사명입니다"),
 	
 	USER_ACTIVE("님을 승인하였습니다"),
 	USER_BLOCK("님은 블락처리 하였습니다"),
