@@ -34,6 +34,10 @@ public class BoardServiceImpl implements BoardService {
 	 */
 	@Override
 	public Page<BoardEntity> findByBoard(Pageable pageable, String search, String user, HttpServletRequest request) throws Exception {
+		String token = jwtTokenUtil.popJWTtoken(request);
+		String id = jwtTokenUtil.popJWTData(token, "jti");
+		System.out.println(id);
+		
 		search = "%" + search + "%";
 		
 		boolean adminCheck = request.isUserInRole("ROLE_ADMIN");
