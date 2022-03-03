@@ -115,6 +115,200 @@ class SearchTest extends ControllerMockPerform{
 				
 				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
 			}
+
+			@Test
+			@DisplayName("페이지와 사이즈가 없는 경우")
+			void noPageNoSize() throws Exception {
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+
+			@Test
+			@DisplayName("페이지와 검색이 없는 경우")
+			void noPageNoSearch() throws Exception {
+				params.add("size", "15");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+
+			@Test
+			@DisplayName("사이즈와 검색이 없는 경우")
+			void noSizeNoSearch() throws Exception {
+				params.add("page", "0");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+
+			@Test
+			@DisplayName("모든 파라메터가 없는 경우")
+			void noParam() throws Exception {
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+		}
+		
+		@Nested
+		@DisplayName("관리자가 권한 바꿨을 경우")
+		class AdminToUser{
+			String ADMIN_URL = SEARCH_URL + "/user";
+			
+		    @BeforeEach
+		    void beforeEach() {
+		    	params = new LinkedMultiValueMap<>();
+		    }
+			
+			@Test
+			@DisplayName("모든 파라메터가 있을 경우")
+			void search() throws Exception {
+				params.add("page", "0");
+				params.add("size", "15");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("검색이 없을 경우")
+			void noSearch() throws Exception {
+				params.add("page", "0");
+				params.add("size", "15");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("페이지가 없을경우 경우")
+			void noPage() throws Exception {
+				params.add("size", "15");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("사이즈가 없을경우 경우")
+			void noSize() throws Exception {
+				params.add("page", "0");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+
+			@Test
+			@DisplayName("페이지와 사이즈가 없는 경우")
+			void noPageNoSize() throws Exception {
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+
+			@Test
+			@DisplayName("페이지와 검색이 없는 경우")
+			void noPageNoSearch() throws Exception {
+				params.add("size", "15");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+
+			@Test
+			@DisplayName("사이즈와 검색이 없는 경우")
+			void noSizeNoSearch() throws Exception {
+				params.add("page", "0");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+
+			@Test
+			@DisplayName("모든 파라메터가 없는 경우")
+			void noParam() throws Exception {
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), ADMIN_TOKEN);
+			}
+			
+		}
+		
+		@Nested
+		@DisplayName("유저 검색")
+		class User{
+			String ADMIN_URL = SEARCH_URL + "/user";
+			
+			@BeforeEach
+			void beforeEach() {
+				params = new LinkedMultiValueMap<>();
+			}
+			
+			@Test
+			@DisplayName("모든 파라메터가 있을 경우")
+			void search() throws Exception {
+				params.add("page", "0");
+				params.add("size", "15");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("검색이 없을 경우")
+			void noSearch() throws Exception {
+				params.add("page", "0");
+				params.add("size", "15");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("페이지가 없을경우 경우")
+			void noPage() throws Exception {
+				params.add("size", "15");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("사이즈가 없을경우 경우")
+			void noSize() throws Exception {
+				params.add("page", "0");
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("페이지와 사이즈가 없는 경우")
+			void noPageNoSize() throws Exception {
+				params.add("search", "next");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("페이지와 검색이 없는 경우")
+			void noPageNoSearch() throws Exception {
+				params.add("size", "15");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			@Test
+			@DisplayName("사이즈와 검색이 없는 경우")
+			void noSizeNoSearch() throws Exception {
+				params.add("page", "0");
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
+			
+			
+			@Test
+			@DisplayName("모든 파라메터가 없는 경우")
+			void noParam() throws Exception {
+				
+				getMockMVC(ADMIN_URL, params, status().isOk(), USER_TOKEN);
+			}
 			
 		}
 		
@@ -123,5 +317,89 @@ class SearchTest extends ControllerMockPerform{
 	@Nested
 	@DisplayName("실패")
 	class fail {
+		@Nested
+		@DisplayName("유저의 유저변경")
+		class UserToUser{
+			@Nested
+			@DisplayName("유저 검색")
+			class User{
+				String ADMIN_URL = SEARCH_URL + "/writer";
+				
+				@BeforeEach
+				void beforeEach() {
+					params = new LinkedMultiValueMap<>();
+				}
+				
+				@Test
+				@DisplayName("모든 파라메터가 있을 경우")
+				void search() throws Exception {
+					params.add("page", "0");
+					params.add("size", "15");
+					params.add("search", "next");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("검색이 없을 경우")
+				void noSearch() throws Exception {
+					params.add("page", "0");
+					params.add("size", "15");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("페이지가 없을경우 경우")
+				void noPage() throws Exception {
+					params.add("size", "15");
+					params.add("search", "next");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("사이즈가 없을경우 경우")
+				void noSize() throws Exception {
+					params.add("page", "0");
+					params.add("search", "next");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("페이지와 사이즈가 없는 경우")
+				void noPageNoSize() throws Exception {
+					params.add("search", "next");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("페이지와 검색이 없는 경우")
+				void noPageNoSearch() throws Exception {
+					params.add("size", "15");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				@Test
+				@DisplayName("사이즈와 검색이 없는 경우")
+				void noSizeNoSearch() throws Exception {
+					params.add("page", "0");
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+				
+				@Test
+				@DisplayName("모든 파라메터가 없는 경우")
+				void noParam() throws Exception {
+					
+					getMockMVC(ADMIN_URL, params, status().isForbidden(), USER_TOKEN);
+				}
+				
+			}
+		}
 	}
 }
