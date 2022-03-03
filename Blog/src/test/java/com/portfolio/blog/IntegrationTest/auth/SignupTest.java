@@ -27,7 +27,7 @@ import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
 
-@DisplayName("권한 테스트")
+@DisplayName("회원가입 테스트")
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
