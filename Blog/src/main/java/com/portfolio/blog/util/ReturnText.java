@@ -2,6 +2,7 @@ package com.portfolio.blog.util;
 
 public enum ReturnText {
 
+	CHECK_IDX("번호를 다시 확인해주세요"),
 	CHECK_ID("아이디를 다시 확인해주세요"),
 	CHECK_PASSWORD("비밀번호를 다시 확인해주세요"),
 	CHECK_NICKNAME("닉네임을 다시 확인해주세요"),

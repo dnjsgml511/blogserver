@@ -1,12 +1,9 @@
 package com.portfolio.blog.IntegrationTest.board;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.util.HashMap;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -14,11 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.config.security.Role;
-import com.portfolio.blog.data.controller.BoardController;
-import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
 
@@ -29,9 +23,6 @@ public class Writing extends ControllerMockPerform{
 
 	@Autowired
     MockMvc mockMvc;
-	
-	@Autowired
-	BoardController boardController;
 	
 	@Autowired
 	BoardRepository boardRepository;
@@ -53,13 +44,13 @@ public class Writing extends ControllerMockPerform{
 		boardRepository.deleteAll();
 	}
 	
-	@Test
-	public void boardInsertController() throws Exception {
-		
-		ObjectMapper mapper = new ObjectMapper();
-		String body = mapper.writeValueAsString(new BoardEntity("title", "content", "writer"));
-		
-		postMockMVC("/board/insert", body, status().isOk(), token);
-	}
+//	@Test
+//	public void boardInsertController() throws Exception {
+//		
+//		ObjectMapper mapper = new ObjectMapper();
+//		String body = mapper.writeValueAsString(new BoardEntity("title", "content", "writer"));
+//		
+//		postMockMVC("/board/insert", body, status().isOk(), token);
+//	}
 
 }

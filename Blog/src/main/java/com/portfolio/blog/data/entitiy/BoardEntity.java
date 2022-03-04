@@ -2,6 +2,7 @@ package com.portfolio.blog.data.entitiy;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -24,7 +25,7 @@ public class BoardEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Schema(description = "Index")
-	private int idx;
+	private Integer idx;
 
 	@Schema(description = "Top pick", example = "0")
 	private int top;
@@ -33,7 +34,8 @@ public class BoardEntity {
 	@Schema(description = "Content", example = "Content")
 	private String content;
 	@Schema(description = "Writer", example = "Writer")
-	private String writer;
+	@Column
+	private int usernum;
 	
 	@CreationTimestamp
 	@Schema(description = "Write Date", example = "2022-04-06 00:00:00")
@@ -45,17 +47,4 @@ public class BoardEntity {
 	
 	@Schema(description = "Content Hiden", example = "0")
 	private int hide;
-	
-	public BoardEntity() {
-	}
-	public BoardEntity(int idx) {
-		this.idx = idx;
-	}
-
-	public BoardEntity(String title, String content, String writer) {
-		this.title = title;
-		this.content = content;
-		this.writer = writer;
-	}
-
 }

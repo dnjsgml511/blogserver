@@ -57,23 +57,25 @@ public class ControllerMockPerform {
 		 		.andExpect(matcher);
 	}
 	
-	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {
+	public void patchMockMVC(String url, String body, ResultMatcher matcher) throws Exception {
 		mockMvc.perform(patch(url)
+				.content(body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
-				.params(params))
-		.andDo(print())
-		.andExpect(matcher);
+				.servletPath(url))
+				.andDo(print())
+				.andExpect(matcher);
 	}
 	
-	public void patchMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher, String token) throws Exception {
+	public void patchMockMVC(String url, String body, ResultMatcher matcher, String token) throws Exception {
 		mockMvc.perform(patch(url)
+				.content(body)
 				.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.accept(MediaType.APPLICATION_JSON_VALUE)
 				.header("authorization", "Bearer " + token)
-				.params(params))
-		.andDo(print())
-		.andExpect(matcher);
+				.servletPath(url))
+				.andDo(print())
+				.andExpect(matcher);
 	}
 	
 	public void deleteMockMVC(String url, MultiValueMap<String, String> params, ResultMatcher matcher) throws Exception {

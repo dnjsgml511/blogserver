@@ -2,10 +2,10 @@ package com.portfolio.blog.data.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.BoardService;
-import com.portfolio.blog.util.ReturnText;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -42,6 +41,7 @@ public class BoardController {
 		this.boardService = boardService;
 	}
 
+	@Autowired
 	BoardService boardService;
 
 	/**
@@ -58,8 +58,7 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
 	public ResponseEntity<?> insertBoard(@RequestBody BoardEntity boardEntity) throws Exception {
-		boardService.saveBoard(boardEntity);
-		return new ResponseEntity<>(ReturnText.SAVE_SUCCESS.getValue(), HttpStatus.OK);
+		return null;
 	}
 
 	/**
@@ -76,7 +75,7 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
 	public ResponseEntity<?> topSearchBoard(@PageableDefault(size = 3, page = 0) Pageable pageable) throws Exception {
-		return new ResponseEntity<>(boardService.findByTopBoard(pageable), HttpStatus.OK);
+		return null;
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class BoardController {
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
 			@RequestParam(name = "search", defaultValue = "" ) String search, @PathVariable(name = "user") String user, HttpServletRequest request) throws Exception {
-		return new ResponseEntity<>(boardService.findByBoard(pageable, search, user, request), HttpStatus.OK);
+		return null;
 	}
 
 	/**
@@ -113,8 +112,7 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<?> deleteBoard(BoardEntity boardEntity) throws Exception {
-		boardService.deleteBoard(boardEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return null;
 	}
 
 	/**
@@ -130,9 +128,8 @@ public class BoardController {
 	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
-	public ResponseEntity<?> updateBoard(BoardEntity boardEntity) throws Exception {
-		boardService.updateBoard(boardEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<?> updateBoard(@RequestBody BoardEntity boardEntity) throws Exception {
+		return null;
 	}
 
 	/**
@@ -149,8 +146,7 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
 	public ResponseEntity<?> hideBoard(BoardEntity boardEntity) throws Exception {
-		boardService.hideBoard(boardEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return null;
 	}
 
 	/**
@@ -167,7 +163,6 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<?> toppickBoard(BoardEntity boardEntity) throws Exception {
-		boardService.topPickBoard(boardEntity);
-		return new ResponseEntity<>(HttpStatus.OK);
+		return null;
 	}
 }

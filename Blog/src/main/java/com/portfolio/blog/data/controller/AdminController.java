@@ -3,7 +3,6 @@ package com.portfolio.blog.data.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,7 +38,7 @@ public class AdminController {
 		@ApiResponse(responseCode = "200", description = "Get User list", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)
 	public ResponseEntity<?> userlist(HttpServletRequest request, UserEntity userEntity) throws Exception {
-		return new ResponseEntity<>(adminService.userlist(userEntity), HttpStatus.OK);
+		return null;
 	}
 	
 	@PostMapping(value = "/userselect", produces = "application/json; charset=utf8")
@@ -50,6 +49,6 @@ public class AdminController {
 		@ApiResponse(responseCode = "200", description = "Change User", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)
 	public ResponseEntity<?> userselect(HttpServletRequest request, @RequestBody UserEntity userEntity) throws Exception {
-		return new ResponseEntity<>(adminService.userselect(userEntity), HttpStatus.OK);
+		return null;
 	}
 }

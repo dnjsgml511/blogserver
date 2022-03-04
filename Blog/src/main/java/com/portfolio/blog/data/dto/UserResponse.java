@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class JwtRequest {
+public class UserResponse {
 	
 	@Schema(description = "id")
 	private String id;
@@ -14,11 +14,11 @@ public class JwtRequest {
 	@Schema(description = "password")
 	private String password;
 
-	public JwtRequest() {
+	public UserResponse() {
 
 	}
 
-	public JwtRequest(String id, String password) {
+	public UserResponse(String id, String password) {
 		this.id = id;
 		this.password = password;
 	}

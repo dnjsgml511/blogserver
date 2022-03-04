@@ -2,9 +2,7 @@ package com.portfolio.blog.IntegrationTest.board;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
@@ -20,8 +18,6 @@ import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.config.security.Role;
-import com.portfolio.blog.data.controller.BoardController;
-import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
 
@@ -32,9 +28,6 @@ public class Delete extends ControllerMockPerform{
 
 	@Autowired
 	MockMvc mockMvc;
-
-	@Autowired
-	BoardController boardController;
 
 	@Autowired
 	BoardRepository boardRepository;
@@ -53,12 +46,12 @@ public class Delete extends ControllerMockPerform{
 		token = jwtTokenUtil.generateToken("ADMIN", claims);
 		url = "/board/delete";
 		
-		List<BoardEntity> list = new ArrayList<>();
-		for(int i = 0; i < 3; ++i) {
-			BoardEntity set = new BoardEntity("title", "content", "writer");
-			list.add(set);
-		}
-		boardRepository.saveAll(list);
+//		List<BoardEntity> list = new ArrayList<>();
+//		for(int i = 0; i < 3; ++i) {
+//			BoardEntity set = new BoardEntity("title", "content", "writer");
+//			list.add(set);
+//		}
+//		boardRepository.saveAll(list);
 	}
 
 	@After

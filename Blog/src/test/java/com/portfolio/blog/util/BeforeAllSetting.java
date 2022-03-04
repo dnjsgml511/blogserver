@@ -9,6 +9,7 @@ import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.entitiy.UserEntity;
+import com.portfolio.blog.data.repository.BoardRepository;
 
 public class BeforeAllSetting {
 
@@ -30,31 +31,40 @@ public class BeforeAllSetting {
 	// 테이블 데이터 셋팅
 	public List<BoardEntity> boardSetting() {
 		List<BoardEntity> list = new ArrayList<BoardEntity>();
-		for(int i = 0; i < 5; ++i) {
-			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, "user");
-			set.setTop(1);
+		
+		for(int i = 0; i < 10; i++) {
+			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, 1);
 			list.add(set);
 		}
 		
-		for(int i = 0; i < 5; ++i) {
-			BoardEntity set = new BoardEntity("title" + i, "content" + i, "other");
-			list.add(set);
-		}
-		for(int i = 0; i < 5; ++i) {
-			BoardEntity set = new BoardEntity("title" + i, "content" + i, "user");
-			set.setHide(1);
-			list.add(set);
-		}
-		
-		for(int i = 0; i < 5; ++i) {
-			BoardEntity set = new BoardEntity("title" + i, "content" + i, "user");
-			list.add(set);
-		}
-		for(int i = 0; i < 5; ++i) {
-			BoardEntity set = new BoardEntity("nexttitle" + i, "content" + i, "user");
-			list.add(set);
-		}
 		return list;
+		
+//		int i = 0;
+//		for(; i < 5; ++i) {
+//			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, "user");
+//			set.setTop(1);
+//			list.add(set);
+//		}
+//		
+//		for(; i < 10; ++i) {
+//			BoardEntity set = new BoardEntity("title" + i, "content" + i, "other");
+//			list.add(set);
+//		}
+//		for(; i < 15; ++i) {
+//			BoardEntity set = new BoardEntity("title" + i, "content" + i, "user");
+//			set.setHide(1);
+//			list.add(set);
+//		}
+//		
+//		for(; i < 20; ++i) {
+//			BoardEntity set = new BoardEntity("title" + i, "content" + i, "user");
+//			list.add(set);
+//		}
+//		for(; i < 25; ++i) {
+//			BoardEntity set = new BoardEntity("nexttitle" + i, "content" + i, "user");
+//			list.add(set);
+//		}
+//		
 	}
 	
 }

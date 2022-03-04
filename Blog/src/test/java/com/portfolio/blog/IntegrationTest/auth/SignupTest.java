@@ -49,12 +49,12 @@ class SignupTest extends ControllerMockPerform{
     	
     	list = new ArrayList<UserEntity>();
     	
-    	list.add(new UserEntity("adminActive", "활동관리자", "1234", Role.ROLE_ADMIN, 1));
-    	list.add(new UserEntity("adminBlock", "비활동관리자", "1234", Role.ROLE_ADMIN));
-    	list.add(new UserEntity("managerActive", "활동매니저", "1234", Role.ROLE_MANAGER, 1));
-    	list.add(new UserEntity("managerBlock", "비활동매니저", "1234", Role.ROLE_MANAGER));
-    	list.add(new UserEntity("userActive", "활동사용자", "1234", Role.ROLE_USER, 1));
-    	list.add(new UserEntity("userBlock", "비활동사용자", "1234", Role.ROLE_USER));
+//    	list.add(new UserEntity("adminActive", "활동관리자", "1234", Role.ROLE_ADMIN, 1));
+//    	list.add(new UserEntity("adminBlock", "비활동관리자", "1234", Role.ROLE_ADMIN));
+//    	list.add(new UserEntity("managerActive", "활동매니저", "1234", Role.ROLE_MANAGER, 1));
+//    	list.add(new UserEntity("managerBlock", "비활동매니저", "1234", Role.ROLE_MANAGER));
+//    	list.add(new UserEntity("userActive", "활동사용자", "1234", Role.ROLE_USER, 1));
+//    	list.add(new UserEntity("userBlock", "비활동사용자", "1234", Role.ROLE_USER));
     	
     	userRepository.saveAll(list);
     }
@@ -72,102 +72,11 @@ class SignupTest extends ControllerMockPerform{
 	@Nested
 	@DisplayName("성공")
 	class success {
-		
-		UserEntity user = new UserEntity("admin", "관리자", "1234");
-		
-		@AfterEach
-	    void afterEach() {
-			userRepository.delete(user);
-		}
-		
-		@Test
-		@DisplayName("회원가입 성공")
-		void singup() throws Exception {
-			String body = mapper.writeValueAsString(user);
-			postMockMVC(SIGNUP_URL, body, status().isOk());
-		}
 	}
 	
 	@Nested
 	@DisplayName("실패")
 	class fail {
-		
-		@Nested
-		@DisplayName("아이디 관련 실패")
-		class IdFail{
-			@Test
-			@DisplayName("미기입으로 인한 실패")
-			void EmptyID() throws Exception {
-				UserEntity user = new UserEntity("", "관리자", "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("Null로 인한 실패")
-			void NullID() throws Exception {
-				UserEntity user = new UserEntity(null, "관리자", "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("중복으로 인한 실패")
-			void OverlappingID() throws Exception {
-				UserEntity user = new UserEntity("userActive", "user", "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-		}
-		
-		@Nested
-		@DisplayName("비밀번호 관련 실패")
-		class PasswordFail{
-			@Test
-			@DisplayName("미기입으로 인한 실패")
-			void EmptyPassword() throws Exception {
-				UserEntity user = new UserEntity("admin", "관리자", "");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("Null로 인한 실패")
-			void NullPassword() throws Exception {
-				UserEntity user = new UserEntity("admin", "관리자", null);
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-		}
-		
-		@Nested
-		@DisplayName("회사명 관련 실패")
-		class NicknameFail{
-			@Test
-			@DisplayName("미기입으로 인한 실패")
-			void EmptyNickname() throws Exception {
-				UserEntity user = new UserEntity("admin", "", "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("Null로 인한 실패")
-			void NullNickname() throws Exception {
-				UserEntity user = new UserEntity("admin", null, "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-			
-			@Test
-			@DisplayName("중복으로 인한 실패")
-			void OverlappingNickname() throws Exception {
-				UserEntity user = new UserEntity("admin", "활동사용자", "1234");
-				String body = mapper.writeValueAsString(user);
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
-		}
-		
 	}
 	
 }
