@@ -15,7 +15,9 @@ public enum ReturnText {
 	SIGN_SUCCESS("회원가입이 완료되었습니다"),
 	SAVE_SUCCESS("저장 되었습니다"),
 	
-	SELECT_FAIL("선택한 값을 확인하세요");
+	SELECT_FAIL("선택한 값을 확인하세요"),
+	
+	NOT_NORMAL_ROUTE("정상적인 경로로 들어온 사용자가 아닙니다");
 	
 	private final String value;
 	

@@ -15,6 +15,7 @@ import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.data.service.BoardService;
+import com.portfolio.blog.util.ReturnText;
 
 @Configuration
 @Service
@@ -41,16 +42,20 @@ public class BoardServiceImpl implements BoardService {
 		
 		search = "%" + search + "%";
 		
-		
 		boolean adminCheck = request.isUserInRole("ROLE_ADMIN");
 		
-		if(adminCheck && user.equals("admin")) {
-			return boardRepository.findByTitleLikeAndTopAndHide(search, 0, 0, pageable);
+		if(adminCheck) {
+			if(user.equals("admin")) {
+				return boardRepository.findByTitleLikeAndTopAndHide(search, 0, 0, pageable);
+			}else {
+				return boardRepository.findByTitleLikeAndTopAndHideAndWriter(search, 0, 0, user, pageable);
+			}
 		}else {
 			if(!user.equals(id)) {
-				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "test");
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.NOT_NORMAL_ROUTE.getValue());
 			}
-			return boardRepository.findByTitleLikeAndTopAndHideAndWriterLike(search, 0, 0, user, pageable);
+			
+			return boardRepository.findByTitleLikeAndTopAndHideAndWriter(search, 0, 0, user, pageable);
 		}
 	}
 

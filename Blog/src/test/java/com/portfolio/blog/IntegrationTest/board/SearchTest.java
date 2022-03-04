@@ -47,7 +47,7 @@ class SearchTest extends ControllerMockPerform{
     	SEARCH_URL = "/board/search"; 
 		ADMIN_TOKEN = jwtTokenUtil.createAdmintoken("adminActive");
 		MANAGER_TOKEN = jwtTokenUtil.createManagertoken("managerActive");
-		USER_TOKEN = jwtTokenUtil.createUsertoken("userActive");
+		USER_TOKEN = jwtTokenUtil.createUsertoken("user");
 		
 		BeforeAllSetting beforeAllSetting = new BeforeAllSetting();
 		userRepository.saveAll(beforeAllSetting.userSetting());
