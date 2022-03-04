@@ -3,6 +3,7 @@ package com.portfolio.blog.data.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfolio.blog.data.dto.SignupResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.AuthService;
 
@@ -45,8 +47,8 @@ public class AuthController {
     	@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
     	@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
     })
-	public ResponseEntity<?> signup(@RequestBody UserEntity userEntity) throws Exception {
-		return null;
+	public ResponseEntity<?> signup(@RequestBody SignupResponse response) throws Exception {
+		return new ResponseEntity<>(authService.signup(response), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/useractive", produces = "application/json; charset=utf8")

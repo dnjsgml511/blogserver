@@ -18,12 +18,12 @@ public class BeforeAllSetting {
 	// 유저 데이터 셋팅
 	public List<UserEntity> userSetting() {
 		List<UserEntity> list = new ArrayList<UserEntity>();
-		list.add(new UserEntity("adminActive", "활동관리자", "1234", Role.ROLE_ADMIN, 1));
-		list.add(new UserEntity("adminBlock", "비활동관리자", "1234", Role.ROLE_ADMIN));
-		list.add(new UserEntity("managerActive", "활동매니저", "1234", Role.ROLE_MANAGER, 1));
-		list.add(new UserEntity("managerBlock", "비활동매니저", "1234", Role.ROLE_MANAGER));
-		list.add(new UserEntity("userActive", "활동사용자", "1234", Role.ROLE_USER, 1));
-		list.add(new UserEntity("userBlock", "비활동사용자", "1234", Role.ROLE_USER));
+//		list.add(new UserEntity("adminActive", "활동관리자", "1234", Role.ROLE_ADMIN, 1));
+//		list.add(new UserEntity("adminBlock", "비활동관리자", "1234", Role.ROLE_ADMIN));
+//		list.add(new UserEntity("managerActive", "활동매니저", "1234", Role.ROLE_MANAGER, 1));
+//		list.add(new UserEntity("managerBlock", "비활동매니저", "1234", Role.ROLE_MANAGER));
+//		list.add(new UserEntity("userActive", "활동사용자", "1234", Role.ROLE_USER, 1));
+//		list.add(new UserEntity("userBlock", "비활동사용자", "1234", Role.ROLE_USER));
 
 		return list;
 	}
@@ -33,8 +33,8 @@ public class BeforeAllSetting {
 		List<BoardEntity> list = new ArrayList<BoardEntity>();
 		
 		for(int i = 0; i < 10; i++) {
-			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, 1);
-			list.add(set);
+//			BoardEntity set = new BoardEntity("top title" + i, "top content" + i, 1);
+//			list.add(set);
 		}
 		
 		return list;

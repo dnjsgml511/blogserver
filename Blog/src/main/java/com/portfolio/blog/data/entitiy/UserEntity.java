@@ -13,19 +13,21 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.portfolio.blog.config.security.Role;
+import com.portfolio.blog.data.dto.SignupResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Schema(description = "사용자")
 
-@Getter
-@Setter
-@Entity
+@Getter @Setter @Entity @ToString
 @Table(name = "users")
-@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 public class UserEntity {
 
 	@Id
@@ -49,4 +51,10 @@ public class UserEntity {
 	@CreationTimestamp
 	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
+	
+	public UserEntity(SignupResponse response){
+		this.id = response.getId();
+		this.password = response.getPassword();
+		this.nickname = response.getNickname();
+	}
 }

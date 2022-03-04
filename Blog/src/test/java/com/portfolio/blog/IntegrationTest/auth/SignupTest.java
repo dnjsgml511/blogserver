@@ -23,6 +23,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.portfolio.blog.config.security.Role;
+import com.portfolio.blog.data.dto.SignupResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
@@ -72,6 +73,14 @@ class SignupTest extends ControllerMockPerform{
 	@Nested
 	@DisplayName("성공")
 	class success {
+		
+		@Test
+		@DisplayName("회원가입 성공")
+		void signup() throws Exception {
+			String body = mapper.writeValueAsString(new SignupResponse("user", "usernick", "1234"));
+			postMockMVC(SIGNUP_URL, body, status().isOk());
+		}
+		
 	}
 	
 	@Nested

@@ -37,12 +37,9 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin("*")
 public class BoardController {
 
-	public BoardController(@RequestBody BoardService boardService) {
-		this.boardService = boardService;
-	}
-
-	@Autowired
-	BoardService boardService;
+//	public BoardController(@RequestBody BoardService boardService) {
+//		this.boardService = boardService;
+//	}
 
 	/**
 	 * 데이터 저장

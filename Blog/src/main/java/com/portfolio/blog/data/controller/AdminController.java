@@ -2,7 +2,6 @@ package com.portfolio.blog.data.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.blog.data.entitiy.UserEntity;
-import com.portfolio.blog.data.service.AdminService;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -26,9 +24,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
-	@Autowired
-	AdminService adminService;
 
 	@GetMapping(value = "/userlist", produces = "application/json; charset=utf8")
 	@Tag(name = "admin")
