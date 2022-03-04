@@ -3,6 +3,7 @@ package com.portfolio.blog.data.controller;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +37,7 @@ public class AuthController {
 		@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
 	})
 	public ResponseEntity<?> createAuthenticationToken(@RequestBody UserEntity userEntity, HttpSession session) throws Exception {
-		return service.createAuthenticationToken(userEntity);
+		return new ResponseEntity<>(service.createAuthenticationToken(userEntity), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/signup", produces = "application/json; charset=utf8")
@@ -46,7 +47,7 @@ public class AuthController {
     	@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
     })
 	public ResponseEntity<?> signup(@RequestBody UserEntity userEntity) throws Exception {
-		return service.signup(userEntity);
+		return new ResponseEntity<>(service.signup(userEntity), HttpStatus.OK);
 	}
 	
 	@PostMapping(value = "/useractive", produces = "application/json; charset=utf8")
@@ -57,7 +58,7 @@ public class AuthController {
 	})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<?> useractive(@RequestBody UserEntity userEntity) throws Exception {
-		return service.useractive(userEntity);
+		return new ResponseEntity<>(service.useractive(userEntity), HttpStatus.OK);
 	}
 
 	
@@ -69,7 +70,7 @@ public class AuthController {
 	})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	public ResponseEntity<?> userblock(@RequestBody UserEntity userEntity) throws Exception {
-		return service.userblock(userEntity);
+		return new ResponseEntity<>(service.userblock(userEntity), HttpStatus.OK);
 	}
 
 }

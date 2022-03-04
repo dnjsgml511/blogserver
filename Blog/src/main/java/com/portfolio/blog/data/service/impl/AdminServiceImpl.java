@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.entitiy.UserEntity;
@@ -36,21 +36,21 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ResponseEntity<?> userselect(UserEntity userEntity) throws Exception {
+	public UserEntity userselect(UserEntity userEntity) throws Exception {
 		
 		String id = userEntity.getId();
 		id = id == null ? "" : id;
 		
 		if(id.equals("")) {
-			return new ResponseEntity<>(ReturnText.SELECT_FAIL.getValue(), HttpStatus.UNPROCESSABLE_ENTITY);
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, ReturnText.SELECT_FAIL.getValue());
 		}
 		
 		UserEntity user = userRepository.findById(id);
 		if(user == null) {
-			return new ResponseEntity<>(ReturnText.SELECT_FAIL.getValue(), HttpStatus.UNPROCESSABLE_ENTITY);
+			throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, ReturnText.SELECT_FAIL.getValue());
 		}
 		
-		return new ResponseEntity<>(user, HttpStatus.OK);
+		return user;
 	}
 
 }

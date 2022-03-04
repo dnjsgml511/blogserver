@@ -95,7 +95,7 @@ public class BoardController {
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
 	public ResponseEntity<?> searchBoard(@PageableDefault(size = 15) Pageable pageable,
-			@RequestParam(name = "search", defaultValue = "" ) String search, @PathVariable String user, HttpServletRequest request) throws Exception {
+			@RequestParam(name = "search", defaultValue = "" ) String search, @PathVariable(name = "user") String user, HttpServletRequest request) throws Exception {
 		return new ResponseEntity<>(boardService.findByBoard(pageable, search, user, request), HttpStatus.OK);
 	}
 

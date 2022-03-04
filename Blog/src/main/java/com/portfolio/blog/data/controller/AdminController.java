@@ -50,6 +50,6 @@ public class AdminController {
 		@ApiResponse(responseCode = "200", description = "Change User", content = @Content(array = @ArraySchema(schema = @Schema(implementation = UserEntity.class))))
 	)
 	public ResponseEntity<?> userselect(HttpServletRequest request, @RequestBody UserEntity userEntity) throws Exception {
-		return adminService.userselect(userEntity);
+		return new ResponseEntity<>(adminService.userselect(userEntity), HttpStatus.OK);
 	}
 }

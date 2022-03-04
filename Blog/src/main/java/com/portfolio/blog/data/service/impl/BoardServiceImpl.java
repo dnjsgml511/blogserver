@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.entitiy.BoardEntity;
@@ -36,14 +38,18 @@ public class BoardServiceImpl implements BoardService {
 	public Page<BoardEntity> findByBoard(Pageable pageable, String search, String user, HttpServletRequest request) throws Exception {
 		String token = jwtTokenUtil.popJWTtoken(request);
 		String id = jwtTokenUtil.popJWTData(token, "jti");
-		System.out.println(id);
 		
 		search = "%" + search + "%";
 		
+		
 		boolean adminCheck = request.isUserInRole("ROLE_ADMIN");
+		
 		if(adminCheck && user.equals("admin")) {
 			return boardRepository.findByTitleLikeAndTopAndHide(search, 0, 0, pageable);
 		}else {
+			if(!user.equals(id)) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, "test");
+			}
 			return boardRepository.findByTitleLikeAndTopAndHideAndWriterLike(search, 0, 0, user, pageable);
 		}
 	}
@@ -86,7 +92,6 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public void hideBoard(BoardEntity boardEntity) throws Exception {
 		BoardEntity target = boardRepository.findById(boardEntity.getIdx()).orElseThrow(() -> new Exception());
-		System.out.println(target);
 		target.setHide(boardEntity.getHide());
 
 		boardRepository.save(target);

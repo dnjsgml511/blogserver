@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.dto.UserMapper;
@@ -26,19 +26,19 @@ public class AuthServiceImpl implements AuthService{
 	private UserRepository userRepository;
 	
 	@Override
-	public ResponseEntity<?> createAuthenticationToken(UserEntity userEntity) throws Exception {
+	public UserMapper createAuthenticationToken(UserEntity userEntity) throws Exception {
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check == null) {
-			return new ResponseEntity<>(ReturnText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_ID.getValue());
 		}
 		
 		if(check.getActive() == 0) {
-			return new ResponseEntity<>(ReturnText.CHECK_ACTIVE.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_ACTIVE.getValue());
 		}
 		
 		if(!check.getPassword().equals(userEntity.getPassword())) {
-			return new ResponseEntity<>(ReturnText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_PASSWORD.getValue());
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -46,32 +46,32 @@ public class AuthServiceImpl implements AuthService{
 		
 		final String token = jwtTokenUtil.generateToken(userEntity.getId(), claims);
 		
-		return new ResponseEntity<>(new UserMapper(check, token), HttpStatus.OK);
+		return new UserMapper(check, token);
 	}
 
 	@Override
 	@Transactional
-	public ResponseEntity<?> signup(UserEntity userEntity) throws Exception {
+	public String signup(UserEntity userEntity) throws Exception {
 		
 		if(userEntity.getId() == null || userEntity.getId().equals("")) {
-			return new ResponseEntity<>(ReturnText.CHECK_ID.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_ID.getValue());
 		}
 		
 		if(userEntity.getPassword() == null || userEntity.getPassword().equals("")) {	
-			return new ResponseEntity<>(ReturnText.CHECK_PASSWORD.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_PASSWORD.getValue());
 		}
 		
 		if(userEntity.getNickname() == null || userEntity.getNickname().equals("")) {
-			return new ResponseEntity<>(ReturnText.CHECK_NICKNAME.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.CHECK_NICKNAME.getValue());
 		}
 		
 		UserEntity check = userRepository.findById(userEntity.getId());
 		if(check != null) {
-			return new ResponseEntity<>(ReturnText.ALREADY_ID.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.ALREADY_ID.getValue());
 		}
 		check = userRepository.findByNickname(userEntity.getNickname());
 		if(check != null) {
-			return new ResponseEntity<>(ReturnText.ALREADY_NICKNAME.getValue(), HttpStatus.FORBIDDEN);
+			throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.ALREADY_NICKNAME.getValue());
 		}
 		
 		Map<String, Object> claims = new HashMap<String, Object>();
@@ -80,25 +80,25 @@ public class AuthServiceImpl implements AuthService{
 		
 		userRepository.save(userEntity);
 		
-		return new ResponseEntity<>(ReturnText.SIGN_SUCCESS.getValue(), HttpStatus.OK);
+		return ReturnText.SIGN_SUCCESS.getValue();
 	}
 
 	@Override
-	public ResponseEntity<?> useractive(UserEntity userEntity) throws Exception {
+	public String useractive(UserEntity userEntity) throws Exception {
 		UserEntity user = userRepository.findById(userEntity.getId());
 		user.setActive(1);
 		userRepository.save(user);
 		
-		return new ResponseEntity<>(user.getNickname() + ReturnText.USER_ACTIVE.getValue(), HttpStatus.OK);
+		return user.getNickname() + ReturnText.USER_ACTIVE.getValue();
 	}
 	
 	@Override
-	public ResponseEntity<?> userblock(UserEntity userEntity) throws Exception {
+	public String userblock(UserEntity userEntity) throws Exception {
 		UserEntity user = userRepository.findById(userEntity.getId());
 		user.setActive(0);
 		userRepository.save(user);
 		
-		return new ResponseEntity<>(user.getNickname() + ReturnText.USER_BLOCK.getValue(), HttpStatus.OK);
+		return user.getNickname() + ReturnText.USER_BLOCK.getValue();
 	}
 
 }
