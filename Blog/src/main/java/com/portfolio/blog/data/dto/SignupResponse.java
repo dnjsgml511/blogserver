@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class SignupResponse {
 	private String id;
-	private String nickname;
 	private String password;
+	private String nickname;
 }
