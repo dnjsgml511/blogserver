@@ -52,9 +52,17 @@ public class UserEntity {
 	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
 	
+	public UserEntity(String id, String password, String nickname) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+	}
+	
 	public UserEntity(SignupResponse response){
 		this.id = response.getId();
 		this.password = response.getPassword();
 		this.nickname = response.getNickname();
+		this.active = 0;
+		this.grade = Role.ROLE_ADMIN;
 	}
 }
