@@ -12,6 +12,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.portfolio.blog.data.dto.board.InsertBoardResponse;
+
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +36,8 @@ public class BoardEntity {
 	@Schema(description = "Content", example = "Content")
 	private String content;
 	@Schema(description = "Writer", example = "Writer")
+	private String writer;
+	@Schema(description = "Writer number", example = "Writer number")
 	@Column
 	private int usernum;
 	
@@ -47,4 +51,11 @@ public class BoardEntity {
 	
 	@Schema(description = "Content Hiden", example = "0")
 	private int hide;
+	
+	public BoardEntity(InsertBoardResponse response) {
+		this.title = response.getTitle();
+		this.content = response.getContent();
+		this.usernum = response.getNum();
+		this.writer = response.getWriter();
+	}
 }

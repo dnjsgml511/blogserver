@@ -10,6 +10,8 @@ public enum ReturnText {
 	CHECK_PASSWORD_LENGTH("비밀번호의 길이를 다시 확인해주세요"),
 	CHECK_NICKNAME_LENGTH("닉네임의 길이를 다시 확인해주세요"),
 	CHECK_ACTIVE("관리자의 승인 후 사용하실 수 있습니다"),
+	CHECK_USER("회원을 확인해주세요"),
+	CHECK_DATA("입력값을 확인해주세요"),
 	
 	ALREADY_ID("이미 가입 된 아이디입니다"),
 	ALREADY_NICKNAME("이미 가입 된 회사명입니다"),

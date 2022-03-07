@@ -43,7 +43,6 @@ class UserSelectTest extends ControllerMockPerform{
     
     @AfterAll
     void afterAll() {
-    	for (UserEntity data : list) userRepository.delete(data);
     }
  
     @BeforeEach
@@ -54,6 +53,7 @@ class UserSelectTest extends ControllerMockPerform{
 	@Nested
 	@DisplayName("성공")
 	class success {
+		
 	}
 	
 	@Nested

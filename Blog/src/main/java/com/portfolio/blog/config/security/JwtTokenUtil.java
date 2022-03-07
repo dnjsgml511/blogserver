@@ -82,6 +82,12 @@ public class JwtTokenUtil {
 		Map<String, Object> map = decodeExpiredTokens(token);
 		return (String) map.get(pop);
 	}
+	
+	public String popJWTData(HttpServletRequest request, String pop) throws JsonMappingException, JsonProcessingException {
+		String token = popJWTtoken(request);
+		Map<String, Object> map = decodeExpiredTokens(token);
+		return (String) map.get(pop);
+	}
 
 	// 토큰이 만료되었는지 확인한다.
 	public Boolean isTokenExpired(String token) {

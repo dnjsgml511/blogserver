@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfolio.blog.data.dto.board.InsertBoardResponse;
 import com.portfolio.blog.data.entitiy.BoardEntity;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.BoardService;
@@ -37,9 +39,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @CrossOrigin("*")
 public class BoardController {
 
-//	public BoardController(@RequestBody BoardService boardService) {
-//		this.boardService = boardService;
-//	}
+	@Autowired
+	BoardService boardService;
 
 	/**
 	 * 데이터 저장
@@ -54,8 +55,8 @@ public class BoardController {
 	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
-	public ResponseEntity<?> insertBoard(@RequestBody BoardEntity boardEntity) throws Exception {
-		return null;
+	public ResponseEntity<?> insertBoard(@RequestBody InsertBoardResponse response, HttpServletRequest request) throws Exception {
+		return new ResponseEntity<>(boardService.insertBoard(response, request), HttpStatus.OK);
 	}
 
 	/**
