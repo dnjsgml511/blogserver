@@ -22,7 +22,7 @@ import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.portfolio.blog.data.dto.SignupResponse;
+import com.portfolio.blog.data.dto.auth.SignupResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
