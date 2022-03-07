@@ -14,14 +14,14 @@ public enum ReturnText {
 	ALREADY_ID("이미 가입 된 아이디입니다"),
 	ALREADY_NICKNAME("이미 가입 된 회사명입니다"),
 	
-	USER_ACTIVE("님을 승인하였습니다"),
-	USER_BLOCK("님은 블락처리 하였습니다"),
+	USER_UPDATE("님의 정보를 수정하였습니다"),
 	SIGN_SUCCESS("회원가입이 완료되었습니다"),
 	SAVE_SUCCESS("저장 되었습니다"),
 	
 	SELECT_FAIL("선택한 값을 확인하세요"),
 	
-	NOT_NORMAL_ROUTE("정상적인 경로로 들어온 사용자가 아닙니다");
+	NOT_NORMAL_ROUTE("정상적인 경로로 들어온 사용자가 아닙니다"),
+	NOT_HAVE_GRADE("권한이 없습니다");
 	
 	private final String value;
 	
