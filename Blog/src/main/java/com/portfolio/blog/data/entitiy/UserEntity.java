@@ -60,6 +60,14 @@ public class UserEntity {
 		this.grade = Role.ROLE_USER;
 	}
 	
+	public UserEntity(String id, String password, String nickname, int active, Role role) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.active = active;
+		this.grade = role;
+	}
+	
 	public UserEntity(String id, String password, String nickname) {
 		this.id = id;
 		this.password = password;

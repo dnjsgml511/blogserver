@@ -1,13 +1,19 @@
 package com.portfolio.blog.data.service.impl;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import com.portfolio.blog.config.security.JwtTokenUtil;
+import com.portfolio.blog.config.security.Role;
+import com.portfolio.blog.data.dto.auth.SigninResponse;
 import com.portfolio.blog.data.dto.auth.SignupResponse;
 import com.portfolio.blog.data.dto.auth.UserControllResponse;
-import com.portfolio.blog.data.dto.auth.UserResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
@@ -17,6 +23,7 @@ import com.portfolio.blog.util.ReturnText;
 public class AuthServiceImpl implements AuthService{
 
 	@Autowired UserRepository userRepository;
+	@Autowired JwtTokenUtil jwtTokenUtil;
 	
 	@Override
 	public String signup(SignupResponse response) throws Exception {
@@ -59,12 +66,6 @@ public class AuthServiceImpl implements AuthService{
 	}
 
 	@Override
-	public String signin(UserResponse response) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String userControll(UserControllResponse response, boolean adminCheck) throws Exception {
 
 		// 아이디 체크
@@ -93,5 +94,44 @@ public class AuthServiceImpl implements AuthService{
 		
 		userRepository.save(user);
 		return user.getNickname() + ReturnText.USER_UPDATE.getValue();
+	}
+
+	@Override
+	public HashMap<String, Object> signin(SigninResponse response, HttpServletRequest request) throws Exception {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		UserEntity user = userRepository.findById(response.getId());
+		
+		// 아이디 체크
+		if(user == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_ID.getValue());
+		}
+		
+		// 비밀번호 체크
+		if(!user.getPassword().equals(response.getPassword())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PASSWORD.getValue());
+		}
+		
+		// 활성화 체크
+		if(user.getActive() == 0) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_ACTIVE.getValue());
+		}
+		
+		String token = null;
+		if(user.getGrade().equals(Role.ROLE_ADMIN)) {
+			token = jwtTokenUtil.createAdmintoken(response.getId());
+		}else if(user.getGrade().equals(Role.ROLE_MANAGER)) {
+			token = jwtTokenUtil.createManagertoken(response.getId());
+		}else if(user.getGrade().equals(Role.ROLE_USER)) {
+			token = jwtTokenUtil.createUsertoken(response.getId());
+		}else {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.NOT_HAVE_GRADE.getValue());
+		}
+		
+		map.put("user", user);
+		map.put("token", token);
+		
+		return map;
 	}
 }
