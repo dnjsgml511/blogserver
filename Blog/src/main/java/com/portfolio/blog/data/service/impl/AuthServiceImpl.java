@@ -5,8 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.portfolio.blog.data.dto.SignupResponse;
-import com.portfolio.blog.data.dto.UserResponse;
+import com.portfolio.blog.data.dto.auth.SignupResponse;
+import com.portfolio.blog.data.dto.auth.UserControllResponse;
+import com.portfolio.blog.data.dto.auth.UserResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
@@ -64,16 +65,33 @@ public class AuthServiceImpl implements AuthService{
 	}
 
 	@Override
-	public String accessUser(String num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public String userControll(UserControllResponse response, boolean adminCheck) throws Exception {
+
+		// 아이디 체크
+		if (response.getId() == null || response.getId().equals("") ) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_NICKNAME.getValue());
+		}
+		
+		UserEntity user = userRepository.findById(response.getId());
+		if(user == null) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, ReturnText.CHECK_NICKNAME.getValue());
+		}
+		
+		
+		// 활성화 변경 있을 경우 수정
+		if(response.getActive() != null) {
+			user.setActive(response.getActive());
+		}
+
+		// 권한 변경 있을 경우 수정
+		if(response.getGrade() != null) {
+			if(!adminCheck) {
+				throw new ResponseStatusException(HttpStatus.FORBIDDEN, ReturnText.NOT_HAVE_GRADE.getValue());
+			}
+			user.setGrade(response.getGrade());
+		}
+		
+		userRepository.save(user);
+		return user.getNickname() + ReturnText.USER_UPDATE.getValue();
 	}
-
-	@Override
-	public String blockUser(String num) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 }
