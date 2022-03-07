@@ -1,4 +1,4 @@
-package com.portfolio.blog.data.dto;
+package com.portfolio.blog.data.dto.auth;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;

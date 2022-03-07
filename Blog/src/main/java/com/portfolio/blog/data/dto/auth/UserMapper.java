@@ -1,4 +1,4 @@
-package com.portfolio.blog.data.dto;
+package com.portfolio.blog.data.dto.auth;
 
 import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.entitiy.UserEntity;

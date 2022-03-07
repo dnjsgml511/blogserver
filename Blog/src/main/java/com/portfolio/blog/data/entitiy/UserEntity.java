@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.portfolio.blog.config.security.Role;
-import com.portfolio.blog.data.dto.SignupResponse;
+import com.portfolio.blog.data.dto.auth.SignupResponse;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -52,10 +52,20 @@ public class UserEntity {
 	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
 	
+	public UserEntity(String id, String password, String nickname, int active) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.active = active;
+		this.grade = Role.ROLE_USER;
+	}
+	
 	public UserEntity(String id, String password, String nickname) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
+		this.active = 0;
+		this.grade = Role.ROLE_USER;
 	}
 	
 	public UserEntity(SignupResponse response){
@@ -63,6 +73,6 @@ public class UserEntity {
 		this.password = response.getPassword();
 		this.nickname = response.getNickname();
 		this.active = 0;
-		this.grade = Role.ROLE_ADMIN;
+		this.grade = Role.ROLE_USER;
 	}
 }
