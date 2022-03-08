@@ -2,8 +2,6 @@ package com.portfolio.blog.IntegrationTest.board;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -22,8 +20,6 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.portfolio.blog.config.security.JwtTokenUtil;
-import com.portfolio.blog.data.entitiy.BoardEntity;
-import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.BeforeAllSetting;

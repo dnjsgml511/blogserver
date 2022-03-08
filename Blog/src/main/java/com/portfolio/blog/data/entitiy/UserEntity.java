@@ -8,6 +8,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -22,17 +23,17 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Schema(description = "사용자")
+@Schema(description = "사용자(조인)")
 
-@Getter @Setter @Entity @ToString
-@Table(name = "users")
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter @Setter @ToString
+@Entity @Table(name = "users")
+@NoArgsConstructor @AllArgsConstructor
+@SequenceGenerator(name = "USER_SEQ_GENERATOR", sequenceName = "USER_SEQ", initialValue = 1, allocationSize = 1)
 public class UserEntity {
-
+	
 	@Id
 	@Schema(description = "Own Number")
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_SEQ_GENERATOR")
 	private int num;
 
 	@Schema(description = "ID")
@@ -52,12 +53,21 @@ public class UserEntity {
 	@Schema(description = "Signup Date")
 	private LocalDateTime signupdate;
 	
-	public UserEntity(String id, String password, String nickname, int active) {
+	public UserEntity(SignupResponse response) {
+		this.id = response.getId();
+		this.password = response.getPassword();
+		this.nickname = response.getNickname();
+		this.active = 0;
+		this.grade = Role.ROLE_USER;
+	}
+
+	public UserEntity(int num, String id, String password, String nickname, int active, Role role) {
+		this.num = num;
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.active = active;
-		this.grade = Role.ROLE_USER;
+		this.grade = role;
 	}
 	
 	public UserEntity(String id, String password, String nickname, int active, Role role) {
@@ -67,7 +77,7 @@ public class UserEntity {
 		this.active = active;
 		this.grade = role;
 	}
-	
+
 	public UserEntity(String id, String password, String nickname) {
 		this.id = id;
 		this.password = password;
@@ -76,11 +86,15 @@ public class UserEntity {
 		this.grade = Role.ROLE_USER;
 	}
 	
-	public UserEntity(SignupResponse response){
-		this.id = response.getId();
-		this.password = response.getPassword();
-		this.nickname = response.getNickname();
-		this.active = 0;
+	public UserEntity(String id, String password, String nickname, int active) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.active = active;
 		this.grade = Role.ROLE_USER;
+	}
+	
+	public UserEntity(int num) {
+		this.num = num;
 	}
 }
