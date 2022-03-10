@@ -64,8 +64,6 @@ public class BoardServiceImpl implements BoardService {
 		} else if (request.isUserInRole("ROLE_MANAGER")) {
 			if (board.getUser().getGrade().equals(Role.ROLE_ADMIN)) {
 				throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ReturnText.NOT_HAVE_GRADE.getValue());
-			} else {
-				boardRepository.delete(board);
 			}
 		} else {
 			throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, ReturnText.NOT_HAVE_GRADE.getValue());
