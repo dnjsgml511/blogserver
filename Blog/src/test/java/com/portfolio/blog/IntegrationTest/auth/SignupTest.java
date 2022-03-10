@@ -2,10 +2,8 @@ package com.portfolio.blog.IntegrationTest.auth;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,164 +16,220 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.portfolio.blog.config.security.JwtTokenUtil;
 import com.portfolio.blog.data.dto.auth.SignupResponse;
-import com.portfolio.blog.data.entitiy.UserEntity;
+import com.portfolio.blog.data.repository.BoardRepository;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.util.ControllerMockPerform;
 
-@DisplayName("회원가입 테스트")
+@DisplayName("회원가입")
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@Transactional
 class SignupTest extends ControllerMockPerform{
 	
 	@Autowired MockMvc mockMvc;
+	@Autowired JwtTokenUtil jwtTokenUtil;
 	@Autowired UserRepository userRepository;
-	
-	MultiValueMap<String, String> params;
-	List<UserEntity> list;
+	@Autowired BoardRepository boardRepository;
+
 	ObjectMapper mapper;
+	MultiValueMap<String, String> params;
 	
-	String SIGNUP_URL;
+	String URL, ADMIN_TOKEN, MANAGER_TOKEN, USER_TOKEN;
 	
     @BeforeAll
-    void beforeAll() {
-    	SIGNUP_URL = "/signup";
-    	list = new ArrayList<UserEntity>();
-    	list.add(new UserEntity("overlap","1234","중복계정"));
-    	userRepository.saveAll(list);
+    void beforeAll(){
+    	URL = "/signup"; 
+		ADMIN_TOKEN = jwtTokenUtil.createAdmintoken(1);
+		MANAGER_TOKEN = jwtTokenUtil.createManagertoken(3);
+		USER_TOKEN = jwtTokenUtil.createUsertoken(5);
     }
     
     @AfterAll
     void afterAll() {
-    	for (UserEntity data : list) userRepository.delete(data);
     }
  
     @BeforeEach
     void beforeEach() {
     	mapper = new ObjectMapper();
+    	params = new LinkedMultiValueMap<>();
+    }
+    
+    @AfterEach
+    void afterEach() {
     }
     
 	@Nested
 	@DisplayName("성공")
-	class success {
+	class Success {
 		
 		@Test
 		@DisplayName("회원가입 성공")
-		void signup() throws Exception {
-			String body = mapper.writeValueAsString(new SignupResponse("user", "usernick", "1234"));
-			postMockMVC(SIGNUP_URL, body, status().isOk());
+		void signUpSuccess() throws Exception{
+			String id = "newUser";
+			String password = "1234";
+			String nickname = "새로운 가입자";
+			
+			String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+			postMockMVC(URL, body, status().isOk());
 		}
 		
 	}
 	
 	@Nested
 	@DisplayName("실패")
-	class fail {
-		
+	class Fail {
+
 		@Nested
-		@DisplayName("입력값 부족")
-		class NotEnoughParam{
+		@DisplayName("아이디 관련 실패")
+		class Id{
+			
 			@Test
-			@DisplayName("아이디가 빈칸이라 회원가입 실패")
-			void emptyId() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("", "1234", "nickname"));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
+			@DisplayName("중복 아이디")
+			void overlappingId() throws Exception{
+				String id = "userActive";
+				String password = "1234";
+				String nickname = "아이디 빈칸 가입자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isConflict());
 			}
 			
 			@Test
-			@DisplayName("아이디가 null이라 회원가입 실패")
-			void nullId() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse(null, "1234", "nickname"));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
+			@DisplayName("짧은 아이디 길이 체크")
+			void shortId() throws Exception{
+				String id = "sho";
+				String password = "1234";
+				String nickname = "아이디 빈칸 가입자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("비밀번호가 빈칸이라 회원가입 실패")
-			void emptyPassword() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "", "nickname"));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
+			@DisplayName("긴 아이디 길이 체크")
+			void longId() throws Exception{
+				String id = "longlonglonglonglongl";
+				String password = "1234";
+				String nickname = "아이디 빈칸 가입자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("비밀번호가 null이라 회원가입 실패")
-			void nullPassword() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", null, "nickname"));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
-			}
-			
-			@Test
-			@DisplayName("닉네임이 빈칸이라 회원가입 실패")
-			void emptyNickname() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "1234", ""));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
-			}
-			
-			@Test
-			@DisplayName("닉네임이 null이라 회원가입 실패")
-			void nullNickname() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "1234", null));
-				postMockMVC(SIGNUP_URL, body, status().isBadRequest());
+			@DisplayName("아이디 빈칸")
+			void emptyId() throws Exception{
+				String id = null;
+				String password = "1234";
+				String nickname = "아이디 null 가입자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 		}
 		
+
 		@Nested
-		@DisplayName("가입 거부")
-		class Refusal{
+		@DisplayName("닉네임 관련 실패")
+		class Nickname{
 			
 			@Test
-			@DisplayName("아이디 중복되어 회원가입 실패")
-			void overlapping() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("overlap", "1234", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isConflict());
+			@DisplayName("중복 닉네임")
+			void overlapNickname() throws Exception{
+				
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "활동사용자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isConflict());
 			}
+			
 
 			@Test
-			@DisplayName("아이디가 길이가 짧아 회원가입 실패")
-			void idLengthShort() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("sho", "1234", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			@DisplayName("짧은 닉네임 길이")
+			void shortNickname() throws Exception{
+				
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("아이디가 길이가 짧아 회원가입 실패")
-			void idLengthLong() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("longlonglonglonglongl", "1234", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			@DisplayName("긴 닉네임 길이")
+			void longNickname() throws Exception{
+				
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자새로운사용자새로운사용자새로운";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("비밀번호가 길이가 짧아 회원가입 실패")
-			void passwordLengthShort() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "123", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			@DisplayName("빈 닉네임")
+			void emptyNickname() throws Exception{
+				
+				String id = "newUser";
+				String password = "1234";
+				String nickname = null;
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+		}
+		
+		@Nested
+		@DisplayName("비밀번호 관련 실패")
+		class Password{
+			
+			@Test
+			@DisplayName("짧은 비밀번호")
+			void shortPassword() throws Exception{
+				String id = "newUser";
+				String password = "123";
+				String nickname = "새로운사용자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("비밀번호가 길이가 짧아 회원가입 실패")
-			void passwordLengthLong() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "longlonglonglonglongl", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			@DisplayName("긴 비밀번호")
+			void longPassword() throws Exception{
+				String id = "newUser";
+				String password = "123456789123456789123";
+				String nickname = "새로운사용자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
 			@Test
-			@DisplayName("닉네임의 길이가 짧아 회원가입 실패")
-			void nicknameLengthShort() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "123", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
+			@DisplayName("빈 비밀번호")
+			void emptyPassword() throws Exception{
+				String id = "newUser";
+				String password = null;
+				String nickname = "새로운사용자";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
-			@Test
-			@DisplayName("닉네임의 길이가 짧아 회원가입 실패")
-			void nicknameLengthLong() throws Exception {
-				String body = mapper.writeValueAsString(new SignupResponse("user", "longlonglonglonglongl", "중복계정"));
-				postMockMVC(SIGNUP_URL, body, status().isForbidden());
-			}
 		}
 	}
-	
 }

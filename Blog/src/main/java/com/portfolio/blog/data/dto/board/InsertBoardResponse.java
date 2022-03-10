@@ -12,12 +12,10 @@ import lombok.Setter;
 public class InsertBoardResponse {
 	private String title;
 	private String content;
-	private String writer;
 	private Integer num;
-
-	public InsertBoardResponse(String title, String content, Integer num) {
+	
+	public InsertBoardResponse(String title, String content) {
 		this.title = title;
 		this.content = content;
-		this.num = num;
 	}
 }

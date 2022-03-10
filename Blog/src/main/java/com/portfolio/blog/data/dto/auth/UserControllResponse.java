@@ -10,17 +10,17 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor @NoArgsConstructor
 public class UserControllResponse {
-	private String id;
+	private int num;
 	private Role grade;
 	private Integer active;
 	
-	public UserControllResponse(String id, Integer active) {
-		this.id = id;
+	public UserControllResponse(int num, Integer active) {
+		this.num = num;
 		this.active = active;
 	}
 	
-	public UserControllResponse(String id, Role grade) {
-		this.id = id;
+	public UserControllResponse(int num, Role grade) {
+		this.num = num;
 		this.grade = grade;
 	}
 }

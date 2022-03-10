@@ -136,26 +136,26 @@ public class JwtTokenUtil {
 	}
 
 	// 관리자 토큰 생성
-	public String createAdmintoken(String id) {
+	public String createAdmintoken(int num) {
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("role", Role.ROLE_ADMIN);
-		return jwtTokenUtil.generateToken(id, claims);
+		return jwtTokenUtil.generateToken(Integer.toString(num), claims);
 	}
 	
-	public String createManagertoken(String id) {
+	public String createManagertoken(int num) {
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("role", Role.ROLE_MANAGER);
-		return jwtTokenUtil.generateToken(id, claims);
+		return jwtTokenUtil.generateToken(Integer.toString(num), claims);
 	}
 	
 	// 유저 토큰 생성
-	public String createUsertoken(String id) {
+	public String createUsertoken(int num) {
 		JwtTokenUtil jwtTokenUtil = new JwtTokenUtil();
 		HashMap<String, Object> claims = new HashMap<String, Object>();
 		claims.put("role", Role.ROLE_USER);
-		return jwtTokenUtil.generateToken(id, claims);
+		return jwtTokenUtil.generateToken(Integer.toString(num), claims);
 	}
 	
 }

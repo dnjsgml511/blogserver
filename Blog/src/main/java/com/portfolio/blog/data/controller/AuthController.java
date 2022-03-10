@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.blog.data.dto.auth.SigninResponse;
 import com.portfolio.blog.data.dto.auth.SignupResponse;
-import com.portfolio.blog.data.dto.auth.UserControllResponse;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.service.AuthService;
 
@@ -52,15 +50,5 @@ public class AuthController {
 	public ResponseEntity<?> signup(@RequestBody SignupResponse response) throws Exception {
 		return new ResponseEntity<>(authService.signup(response), HttpStatus.OK);
 	}
-	
-	@PostMapping(value = "/user/controll", produces = "application/json; charset=utf8")
-	@Tag(name = "auth")
-	@Operation(summary = "User Active", description = "User Active", responses = {
-			@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
-			@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
-	})
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
-	public ResponseEntity<?> useractive(@RequestBody UserControllResponse response, HttpServletRequest request) throws Exception {
-		return new ResponseEntity<>(authService.userControll(response, request.isUserInRole("ROLE_ADMIN")), HttpStatus.OK);
-	}
+
 }
