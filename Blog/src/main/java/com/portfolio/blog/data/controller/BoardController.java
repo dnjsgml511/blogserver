@@ -108,7 +108,7 @@ public class BoardController {
 	        @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserEntity.class))),
 	        @ApiResponse(responseCode = "403", description = "AUTH OUT", content = @Content(schema = @Schema(implementation = String.class)))
 		})
-	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER', 'ROLE_USER')")
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_MANAGER')")
 	public ResponseEntity<?> deleteBoard(@RequestParam int num, HttpServletRequest request) throws Exception {
 		return new ResponseEntity<>(boardService.deleteBoard(num, request), HttpStatus.OK);
 	}
