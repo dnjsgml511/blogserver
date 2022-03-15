@@ -15,7 +15,7 @@ import com.portfolio.blog.data.dto.auth.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
-import com.portfolio.blog.util.CheckValue;
+import com.portfolio.blog.util.ValidCheck;
 import com.portfolio.blog.util.ReturnText;
 
 @Service
@@ -26,7 +26,7 @@ public class AuthServiceImpl implements AuthService {
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
 	@Autowired
-	CheckValue checkValue;
+	ValidCheck validCheck;
 
 	@Override
 	public String signup(SignupResponse response) throws Exception {
@@ -65,11 +65,11 @@ public class AuthServiceImpl implements AuthService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_NICKNAME_LENGTH.getValue());
 		}
 		// 전화번호 유효성 체크
-		if (checkValue.isPhone(response.getPhone().replaceAll("-", ""))) {
+		if (validCheck.isPhone(response.getPhone().replaceAll("-", ""))) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PHONE.getValue());
 		}
 		// 이메일 유효성 체크
-		if (checkValue.isEmail(response.getEmail())) {
+		if (validCheck.isEmail(response.getEmail())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
 
