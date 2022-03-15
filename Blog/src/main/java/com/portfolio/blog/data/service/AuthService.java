@@ -4,7 +4,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.portfolio.blog.data.dto.auth.SigninResponse;
 import com.portfolio.blog.data.dto.auth.SignupResponse;
-import com.portfolio.blog.data.dto.auth.UserControllResponse;
 import com.portfolio.blog.data.dto.auth.UserMapper;
 
 public interface AuthService {

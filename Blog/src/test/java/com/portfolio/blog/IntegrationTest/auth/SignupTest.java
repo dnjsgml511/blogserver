@@ -77,8 +77,10 @@ class SignupTest extends ControllerMockPerform{
 			String id = "newUser";
 			String password = "1234";
 			String nickname = "새로운 가입자";
+			String phone = "010-0000-0000";
+			String email = "lwh@koreapetroleum.com";
 			
-			String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+			String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 			postMockMVC(URL, body, status().isOk());
 		}
 		
@@ -98,8 +100,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "userActive";
 				String password = "1234";
 				String nickname = "아이디 빈칸 가입자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isConflict());
 			}
 			
@@ -109,8 +113,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "sho";
 				String password = "1234";
 				String nickname = "아이디 빈칸 가입자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -120,8 +126,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "longlonglonglonglongl";
 				String password = "1234";
 				String nickname = "아이디 빈칸 가입자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -131,8 +139,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = null;
 				String password = "1234";
 				String nickname = "아이디 null 가입자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 		}
@@ -149,8 +159,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "1234";
 				String nickname = "활동사용자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isConflict());
 			}
 			
@@ -162,8 +174,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "1234";
 				String nickname = "새로운";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -174,8 +188,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "1234";
 				String nickname = "새로운사용자새로운사용자새로운사용자새로운";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -186,8 +202,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "1234";
 				String nickname = null;
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -203,8 +221,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "123";
 				String nickname = "새로운사용자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -214,8 +234,10 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = "123456789123456789123";
 				String nickname = "새로운사용자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
 			
@@ -225,10 +247,110 @@ class SignupTest extends ControllerMockPerform{
 				String id = "newUser";
 				String password = null;
 				String nickname = "새로운사용자";
+				String phone = "010-0000-0000";
+				String email = "lwh@koreapetroleum.com";
 				
-				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname));
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
 				postMockMVC(URL, body, status().isBadRequest());
 			}
+			
+		}
+		
+		@Nested
+		@DisplayName("전화번호 관련 실패")
+		class phone{
+			
+			@Test
+			@DisplayName("빈 전화번호")
+			void emptyPhone() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+			@Test
+			@DisplayName("null 전화번호")
+			void nullPhone() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = null;
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+
+			@Test
+			@DisplayName("잘못된 전화번호 1")
+			void wrongPhone1() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "0100-000-0000";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+			@Test
+			@DisplayName("잘못된 전화번호 2")
+			void wrongPhone2() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "010-00000-0000";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+			@Test
+			@DisplayName("잘못된 전화번호 3")
+			void wrongPhone3() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "010-000-0000";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+			@Test
+			@DisplayName("잘못된 전화번호 4")
+			void wrongPhone4() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "010-0000-000";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
+			@Test
+			@DisplayName("잘못된 전화번호 5")
+			void wrongPhone5() throws Exception{
+				String id = "newUser";
+				String password = "1234";
+				String nickname = "새로운사용자";
+				String phone = "010-0000-00000";
+				String email = "lwh@koreapetroleum.com";
+				
+				String body = mapper.writeValueAsString(new SignupResponse(id, password, nickname, phone, email));
+				postMockMVC(URL, body, status().isBadRequest());
+			}
+			
 			
 		}
 	}

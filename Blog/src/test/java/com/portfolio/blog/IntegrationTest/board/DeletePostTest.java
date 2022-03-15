@@ -65,12 +65,6 @@ class DeletePostTest extends ControllerMockPerform {
 	void beforeEach() {
 		mapper = new ObjectMapper();
 		params = new LinkedMultiValueMap<>();
-
-		// getMockMVC(URL, params, status().isOk(), TOKEN);
-
-		// String body = mapper.writeValueAsString(new DTO());
-		// postMockMVC(URL, body, status().isBadRequest(), TOKEN);
-
 	}
 
 	@AfterEach
@@ -121,5 +115,35 @@ class DeletePostTest extends ControllerMockPerform {
 	@Nested
 	@DisplayName("실패")
 	class Fail {
+		
+		@Test
+		@DisplayName("매니저의 관리자 게시물 삭제")
+		void managerDelToAdmin() throws Exception {
+			params.add("num", "1");			
+			deleteMockMVC(URL, params, status().isForbidden(), MANAGER_TOKEN);
+		}
+		
+		@Test
+		@DisplayName("사용자의 관리자 게시물 삭제")
+		void userDelToAdmin() throws Exception {
+			params.add("num", "1");			
+			deleteMockMVC(URL, params, status().isForbidden(), USER_TOKEN);
+		}
+		
+		@Test
+		@DisplayName("사용자의 매니저 게시물 삭제")
+		void userDelToManager() throws Exception {
+			params.add("num", "3");			
+			deleteMockMVC(URL, params, status().isForbidden(), USER_TOKEN);
+		}
+		
+		@Test
+		@DisplayName("사용자의 다른 사용자 게시물 삭제")
+		void userDelToOtherUser() throws Exception {
+			params.add("num", "5");			
+			deleteMockMVC(URL, params, status().isForbidden(), USER_TOKEN);
+		}
+		
+		
 	}
 }

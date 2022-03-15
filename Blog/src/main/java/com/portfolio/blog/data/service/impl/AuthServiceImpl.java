@@ -15,6 +15,7 @@ import com.portfolio.blog.data.dto.auth.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
+import com.portfolio.blog.util.CheckValue;
 import com.portfolio.blog.util.ReturnText;
 
 @Service
@@ -24,6 +25,8 @@ public class AuthServiceImpl implements AuthService {
 	UserRepository userRepository;
 	@Autowired
 	JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	CheckValue checkValue;
 
 	@Override
 	public String signup(SignupResponse response) throws Exception {
@@ -40,6 +43,14 @@ public class AuthServiceImpl implements AuthService {
 		if (response.getNickname() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_NICKNAME.getValue());
 		}
+		// 전화번호 값 체크
+		if (response.getPhone() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PHONE.getValue());
+		}
+		// 이메일 값 체크
+		if (response.getEmail() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
+		}
 
 		// 아이디 길이 체크
 		if (response.getId().length() < 4 || response.getId().length() > 20) {
@@ -53,6 +64,14 @@ public class AuthServiceImpl implements AuthService {
 		if (response.getNickname().length() < 4 || response.getNickname().length() > 20) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_NICKNAME_LENGTH.getValue());
 		}
+		// 전화번호 유효성 체크
+		if (checkValue.isPhone(response.getPhone().replaceAll("-", ""))) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PHONE.getValue());
+		}
+		// 이메일 유효성 체크
+		if (checkValue.isEmail(response.getEmail())) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
+		}
 
 		// 아이디 중복 체크
 		UserEntity userCheck = userRepository.findById(response.getId());
@@ -65,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
 		if (nicknameCheck != null) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_NICKNAME.getValue());
 		}
-
+		
 		// 회원가입
 		userRepository.save(new UserEntity(response));
 		return ReturnText.SIGN_SUCCESS.getValue();
@@ -73,6 +92,8 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserMapper signin(SigninResponse response, HttpServletRequest request) throws Exception {
+
+		response = new SigninResponse(response);
 
 		UserEntity user = userRepository.findById(response.getId());
 
@@ -91,8 +112,6 @@ public class AuthServiceImpl implements AuthService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_ACTIVE.getValue());
 		}
 
-		System.out.println(user);
-		
 		String token = null;
 		if (user.getGrade().equals(Role.ROLE_ADMIN)) {
 			token = jwtTokenUtil.createAdmintoken(user.getNum());

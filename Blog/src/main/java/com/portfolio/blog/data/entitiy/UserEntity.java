@@ -48,6 +48,10 @@ public class UserEntity {
 	private String password;
 	@Schema(description = "Active")
 	private int active;
+	@Schema(description = "phone")
+	private String phone;
+	@Schema(description = "email")
+	private String email;
 
 	@Enumerated(EnumType.STRING)
 	@Schema(description = "Grade")
@@ -61,6 +65,8 @@ public class UserEntity {
 		this.id = response.getId();
 		this.password = response.getPassword();
 		this.nickname = response.getNickname();
+		this.phone = response.getPhone();
+		this.email = response.getEmail();
 		this.active = 0;
 		this.grade = Role.ROLE_USER;
 	}
@@ -82,6 +88,14 @@ public class UserEntity {
 		this.grade = role;
 	}
 
+	public UserEntity(String id, String password, String nickname, Role role, String phone, String email) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.phone = phone;
+		this.email = email;
+		this.grade = role;
+	}
 	public UserEntity(String id, String password, String nickname, Role role) {
 		this.id = id;
 		this.password = password;
@@ -98,6 +112,16 @@ public class UserEntity {
 		this.grade = role;
 	}
 
+	public UserEntity(String id, String password, String nickname, Role role, int active, String phone, String email) {
+		this.id = id;
+		this.password = password;
+		this.nickname = nickname;
+		this.phone = phone;
+		this.email = email;
+		this.active = active;
+		this.grade = role;
+	}
+	
 	public UserEntity(String id, String password, String nickname, Role role, int active) {
 		this.id = id;
 		this.password = password;

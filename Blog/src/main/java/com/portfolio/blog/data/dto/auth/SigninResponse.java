@@ -10,4 +10,9 @@ import lombok.Setter;
 public class SigninResponse {
 	String id;
 	String password;
+	
+	public SigninResponse(SigninResponse response) {
+		this.id = response.id.toLowerCase();
+		this.password = response.password.toLowerCase();
+	}
 }
