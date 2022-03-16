@@ -14,4 +14,8 @@ public class SignupResponse {
 	private String nickname;
 	private String phone;
 	private String email;
+	
+	public SignupResponse(String email) {
+		this.email = email;
+	}
 }

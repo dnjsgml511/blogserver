@@ -11,4 +11,6 @@ public interface AuthService {
 	public String signup(SignupResponse response) throws Exception;
 	// 로그인
 	public UserMapper signin(SigninResponse response, HttpServletRequest request) throws Exception;
+	// 아이디 찾기
+	public String findid(SignupResponse response) throws Exception;
 }

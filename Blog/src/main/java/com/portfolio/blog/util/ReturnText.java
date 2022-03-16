@@ -19,9 +19,10 @@ public enum ReturnText {
 	ALREADY_NICKNAME("이미 가입 된 회사명입니다"),
 	
 	USER_UPDATE("님의 정보를 수정하였습니다"),
-	SIGN_SUCCESS("회원가입이 완료되었습니다"),
+	SIGN_SUCCESS("회원가입이 완료되었습니다.\n관리자의 승인 후 사용 가능합니다"),
 	SAVE_SUCCESS("저장 되었습니다"),
 	DELETE_SUCCESS("삭제 되었습니다"),
+	FIND_SUCCESS("이메일로 발송되었습니다"),
 	
 	SELECT_FAIL("선택한 값을 확인하세요"),
 	

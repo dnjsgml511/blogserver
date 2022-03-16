@@ -61,7 +61,7 @@ public class ValidCheck {
 
 	// 일반 전화 검사기
 	public boolean isPhone(String str) {
-		return Pattern.matches("^\\d{2,3}\\d{3,4}\\d{4}$", str);
+		return Pattern.matches("^\\d{3}-\\d{3,4}-\\d{4}$", str);
 	}
 
 	// IP 검사기

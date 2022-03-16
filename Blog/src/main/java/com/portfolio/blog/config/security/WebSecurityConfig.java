@@ -17,8 +17,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import com.portfolio.blog.util.Paths;
-
 /**
  * @apiNote jwt 필터 셋팅
  * @since 2021-11-30

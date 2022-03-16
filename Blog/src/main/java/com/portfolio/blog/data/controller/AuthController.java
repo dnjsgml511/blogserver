@@ -51,4 +51,15 @@ public class AuthController {
 		return new ResponseEntity<>(authService.signup(response), HttpStatus.OK);
 	}
 
+
+	@PostMapping(value = "/findid", produces = "application/json; charset=utf8")
+	@Tag(name = "auth")
+    @Operation(summary = "find id", description = "User find id", responses = {
+    	@ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = String.class))),
+    	@ApiResponse(responseCode = "403", description = "FORBIDDEN", content = @Content(schema = @Schema(implementation = String.class))),
+    })
+	public ResponseEntity<?> findid(@RequestBody SignupResponse response) throws Exception {
+		return new ResponseEntity<>(authService.findid(response), HttpStatus.OK);
+	}
+	
 }

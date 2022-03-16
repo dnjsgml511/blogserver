@@ -15,8 +15,8 @@ import com.portfolio.blog.data.dto.auth.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
-import com.portfolio.blog.util.ValidCheck;
 import com.portfolio.blog.util.ReturnText;
+import com.portfolio.blog.util.ValidCheck;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -65,11 +65,11 @@ public class AuthServiceImpl implements AuthService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_NICKNAME_LENGTH.getValue());
 		}
 		// 전화번호 유효성 체크
-		if (validCheck.isPhone(response.getPhone().replaceAll("-", ""))) {
+		if (!validCheck.isPhone(response.getPhone())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PHONE.getValue());
 		}
 		// 이메일 유효성 체크
-		if (validCheck.isEmail(response.getEmail())) {
+		if (!validCheck.isEmail(response.getEmail())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
 
@@ -84,7 +84,7 @@ public class AuthServiceImpl implements AuthService {
 		if (nicknameCheck != null) {
 			throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_NICKNAME.getValue());
 		}
-		
+
 		// 회원가입
 		userRepository.save(new UserEntity(response));
 		return ReturnText.SIGN_SUCCESS.getValue();
@@ -124,5 +124,26 @@ public class AuthServiceImpl implements AuthService {
 		}
 
 		return new UserMapper(user, token);
+	}
+
+	@Override
+	public String findid(SignupResponse response) throws Exception {
+		
+		String email = response.getEmail();
+		
+		// 이메일이 공백일 경우
+		if(email == null || email.equals("")) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
+		}
+
+		UserEntity user = userRepository.findByEmail(email.toLowerCase());
+		// 이메일이 없을 경우 
+		if(user == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
+		}
+		
+		
+
+		return ReturnText.FIND_SUCCESS.getValue();
 	}
 }
