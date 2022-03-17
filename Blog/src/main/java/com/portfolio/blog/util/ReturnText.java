@@ -8,6 +8,8 @@ public enum ReturnText {
 	CHECK_NICKNAME("닉네임을 다시 확인 해주세요"),
 	CHECK_PHONE("전화번호를 다시 확인 해주세요"),
 	CHECK_EMAIL("이메일을 다시 확인 해주세요"),
+	CHECK_COMPANYNO("이메일을 다시 확인 해주세요"),
+	
 	CHECK_ID_LENGTH("아이디의 길이를 확인 해주세요"),
 	CHECK_PASSWORD_LENGTH("비밀번호의 길이를 다시 확인 해주세요"),
 	CHECK_NICKNAME_LENGTH("닉네임의 길이를 다시 확인 해주세요"),
@@ -17,6 +19,8 @@ public enum ReturnText {
 	
 	ALREADY_ID("이미 가입 된 아이디입니다"),
 	ALREADY_NICKNAME("이미 가입 된 회사명입니다"),
+	ALREADY_EMAIL("이미 가입 된 이메일입니다"),
+	ALREADY_COMPANYNO("이미 가입 된 사업자번호입니다"),
 	
 	USER_UPDATE("님의 정보를 수정하였습니다"),
 	SIGN_SUCCESS("회원가입이 완료되었습니다.\n관리자의 승인 후 사용 가능합니다"),

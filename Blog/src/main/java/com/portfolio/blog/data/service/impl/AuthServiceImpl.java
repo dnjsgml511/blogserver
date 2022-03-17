@@ -1,5 +1,7 @@
 package com.portfolio.blog.data.service.impl;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
 import com.portfolio.blog.util.ReturnText;
+import com.portfolio.blog.util.SMTP;
 import com.portfolio.blog.util.ValidCheck;
 
 @Service
@@ -51,6 +54,10 @@ public class AuthServiceImpl implements AuthService {
 		if (response.getEmail() == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
+		// 사업자번호 값 체크
+		if (response.getCompanyno() == null) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_COMPANYNO.getValue());
+		}
 
 		// 아이디 길이 체크
 		if (response.getId().length() < 4 || response.getId().length() > 20) {
@@ -73,16 +80,28 @@ public class AuthServiceImpl implements AuthService {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
 
-		// 아이디 중복 체크
-		UserEntity userCheck = userRepository.findById(response.getId());
-		if (userCheck != null) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_ID.getValue());
-		}
-
-		// 닉네임 중복 체크
-		UserEntity nicknameCheck = userRepository.findByNickname(response.getNickname());
-		if (nicknameCheck != null) {
-			throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_NICKNAME.getValue());
+		List<UserEntity> check = userRepository.findByIdOrNicknameOrEmailOrCompanyno(response.getId(), response.getNickname(), response.getEmail(), response.getCompanyno());
+		
+		if(check.size() != 0) {
+			for (UserEntity data : check) {
+				System.out.println(data);
+				// 아이디 중복 체크
+				if(data.getId().equals(response.getId())) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_ID.getValue());
+				}
+				// 닉네임 중복 체크
+				if(data.getNickname().equals(response.getNickname())) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_NICKNAME.getValue());
+				}
+				// 이메일 중복 체크
+				if(data.getEmail().equals(response.getEmail())) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_EMAIL.getValue());
+				}
+				// 사업자번호 중복 체크
+				if(data.getEmail().equals(response.getEmail())) {
+					throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_COMPANYNO.getValue());
+				}
+			}
 		}
 
 		// 회원가입
@@ -128,21 +147,21 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public String findid(SignupResponse response) throws Exception {
-		
+
 		String email = response.getEmail();
-		
+
 		// 이메일이 공백일 경우
-		if(email == null || email.equals("")) {
+		if (email == null || email.equals("")) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
 
 		UserEntity user = userRepository.findByEmail(email.toLowerCase());
-		// 이메일이 없을 경우 
-		if(user == null) {
+		// 이메일이 없을 경우
+		if (user == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_EMAIL.getValue());
 		}
-		
-		
+
+		SMTP.sendIdMail(response.getEmail(), user.getId());
 
 		return ReturnText.FIND_SUCCESS.getValue();
 	}

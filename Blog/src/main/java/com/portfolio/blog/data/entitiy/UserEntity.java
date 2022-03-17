@@ -52,6 +52,8 @@ public class UserEntity {
 	private String phone;
 	@Schema(description = "email")
 	private String email;
+	@Schema(description = "companyno")
+	private String companyno;
 
 	@Enumerated(EnumType.STRING)
 	@Schema(description = "Grade")
@@ -88,21 +90,24 @@ public class UserEntity {
 		this.grade = role;
 	}
 
-	public UserEntity(String id, String password, String nickname, Role role, String phone, String email) {
+	public UserEntity(String id, String password, String nickname, Role role, String phone, String email,
+			String companyno) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.phone = phone;
 		this.email = email;
+		this.companyno = companyno;
 		this.grade = role;
 	}
+
 	public UserEntity(String id, String password, String nickname, Role role) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.grade = role;
 	}
-	
+
 	public UserEntity(int num, String id, String password, String nickname, Role role, int active) {
 		this.num = num;
 		this.id = id;
@@ -112,16 +117,18 @@ public class UserEntity {
 		this.grade = role;
 	}
 
-	public UserEntity(String id, String password, String nickname, Role role, int active, String phone, String email) {
+	public UserEntity(String id, String password, String nickname, Role role, int active, String phone, String email,
+			String companyno) {
 		this.id = id;
 		this.password = password;
 		this.nickname = nickname;
 		this.phone = phone;
 		this.email = email;
+		this.companyno = companyno;
 		this.active = active;
 		this.grade = role;
 	}
-	
+
 	public UserEntity(String id, String password, String nickname, Role role, int active) {
 		this.id = id;
 		this.password = password;
@@ -149,7 +156,7 @@ public class UserEntity {
 	public UserEntity(int num) {
 		this.num = num;
 	}
-	
+
 	public UserEntity(UserEntity entity) {
 		this.id = entity.getId();
 		this.password = entity.getPassword();

@@ -83,7 +83,7 @@ class FindidTest extends ControllerMockPerform {
 		@DisplayName("아이디 찾기 성공")
 		void findid() throws Exception {
 			
-			String email = "adminactive@koreapetroleum.com";
+			String email = "lwh@koreapetroleum.com";
 			
 			String body = mapper.writeValueAsString(new SignupResponse(email));
 			postMockMVC(URL, body, status().isOk());
