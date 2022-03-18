@@ -15,6 +15,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.portfolio.blog.config.security.Role;
 import com.portfolio.blog.data.dto.auth.SignupResponse;
+import com.portfolio.blog.util.Userflag;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Schema(description = "사용자(조인)")
+@Schema(description = "유저")
 
 @Getter
 @Setter
@@ -54,6 +55,11 @@ public class UserEntity {
 	private String email;
 	@Schema(description = "companyno")
 	private String companyno;
+	@Schema(description = "ERP 사업장 코드")
+	private String erpcode;
+	@Schema(description = "사용자 타입")
+	private Userflag userflag;
+	
 
 	@Enumerated(EnumType.STRING)
 	@Schema(description = "Grade")
@@ -69,6 +75,7 @@ public class UserEntity {
 		this.nickname = response.getNickname();
 		this.phone = response.getPhone();
 		this.email = response.getEmail();
+		this.companyno = response.getCompanyno();
 		this.active = 0;
 		this.grade = Role.ROLE_USER;
 	}

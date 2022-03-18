@@ -13,6 +13,6 @@ public class SigninResponse {
 	
 	public SigninResponse(SigninResponse response) {
 		this.id = response.id.toLowerCase();
-		this.password = response.password.toLowerCase();
+		this.password = response.getPassword();
 	}
 }
