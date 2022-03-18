@@ -17,6 +17,7 @@ import com.portfolio.blog.data.dto.auth.UserMapper;
 import com.portfolio.blog.data.entitiy.UserEntity;
 import com.portfolio.blog.data.repository.UserRepository;
 import com.portfolio.blog.data.service.AuthService;
+import com.portfolio.blog.util.Encryption;
 import com.portfolio.blog.util.ReturnText;
 import com.portfolio.blog.util.SMTP;
 import com.portfolio.blog.util.ValidCheck;
@@ -84,7 +85,6 @@ public class AuthServiceImpl implements AuthService {
 		
 		if(check.size() != 0) {
 			for (UserEntity data : check) {
-				System.out.println(data);
 				// 아이디 중복 체크
 				if(data.getId().equals(response.getId())) {
 					throw new ResponseStatusException(HttpStatus.CONFLICT, ReturnText.ALREADY_ID.getValue());
@@ -104,6 +104,10 @@ public class AuthServiceImpl implements AuthService {
 			}
 		}
 
+		// 비밀번호 암호화
+		String password = Encryption.encode(response.getPassword());
+		response.setPassword(password);
+		
 		// 회원가입
 		userRepository.save(new UserEntity(response));
 		return ReturnText.SIGN_SUCCESS.getValue();
@@ -111,7 +115,7 @@ public class AuthServiceImpl implements AuthService {
 
 	@Override
 	public UserMapper signin(SigninResponse response, HttpServletRequest request) throws Exception {
-
+		
 		response = new SigninResponse(response);
 
 		UserEntity user = userRepository.findById(response.getId());
@@ -120,9 +124,9 @@ public class AuthServiceImpl implements AuthService {
 		if (user == null) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_ID.getValue());
 		}
-
+		
 		// 비밀번호 체크
-		if (!user.getPassword().equals(response.getPassword())) {
+		if (!Encryption.decode(user.getPassword()).equals(response.getPassword())) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ReturnText.CHECK_PASSWORD.getValue());
 		}
 
